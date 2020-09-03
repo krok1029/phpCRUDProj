@@ -9,7 +9,7 @@ if (empty($_GET['sid'])) {
     header('Location: ' . $referer);
     exit;
 }
-$pet_id = intval($_GET['sid']) ?? 0;
+$sid = intval($_GET['sid']) ?? 0;
 
 $pdo->query("DELETE FROM pet_info WHERE sid=$sid ");
 header('Location: ' . $referer);

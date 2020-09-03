@@ -85,7 +85,7 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <?php if (!isset($_SESSION['admin1'])) : ?>
-                        <td><a href="data-delete.php?pet_id=<?= $r['pet_id'] ?>" onclick="ifDel(event)" data-sid="<?= $r['pet_id'] ?>">
+                        <td><a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
