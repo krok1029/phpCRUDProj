@@ -31,11 +31,26 @@ require __DIR__ . '/parts/__admin_required.php';
                             <input type="text" class="form-control" id="name" name="name" required>
                             <small class="form-text error-msg"></small>
                         </div>
-                        <div class="form-group">
+
+                        <!-- <div class="form-group">
                             <label for="dog_cat"><span class="red-stars">**</span> 貓咪/狗勾</label>
                             <input type="type" class="form-control" id="dog_cat" name="dog_cat">
                             <small class="form-text error-msg"></small>
+                        </div> -->
+
+
+                        <div class="form-group">
+                            <label for="category_sid"><span class="red-stars">**</span> 貓咪/狗勾</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Radio1" value="cat" name="dog_cat">
+                                <label class="form-check-label" for="Radio1">貓咪</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Radio2" value="dog" name="dog_cat">
+                                <label class="form-check-label" for="Radio2">狗勾</label>
+                            </div>
                         </div>
+
                         <div class="form-group">
                             <label for="age"><span class="red-stars">**</span> 年齡</label>
                             <input type="tel" class="form-control" id="age" name="age">
@@ -74,12 +89,13 @@ require __DIR__ . '/parts/__admin_required.php';
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
     const $name = document.querySelector('#name');
-    const $type = document.querySelector('#dog_cat');
+    // const $type = document.querySelector('#dog_cat');
     const $brand = document.querySelector('#age');
     const $pricing = document.querySelector('#area');
     const $price = document.querySelector('#address');
     const $description = document.querySelector('#description');
-    const r_fields = [$name, $type, $brand, $pricing, $price, description];
+    // const r_fields = [$name, $type, $brand, $pricing, $price, description];
+    const r_fields = [$name, $brand, $pricing, $price, description];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
@@ -105,6 +121,8 @@ require __DIR__ . '/parts/__admin_required.php';
                     method: 'POST',
                     body: fd
                 })
+                // .then(r => r.text())
+                // .then(r => console.log(r))
                 .then(r => r.json())
                 .then(obj => {
                     console.log(obj);

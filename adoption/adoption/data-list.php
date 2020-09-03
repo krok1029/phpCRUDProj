@@ -82,7 +82,7 @@ if ($totalRows > 0) {
                 <?php if (!isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
-                <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+                <th scope="col"><i class="fas fa-heart"></i></th>
 
 
             </tr>
@@ -108,7 +108,7 @@ if ($totalRows > 0) {
                     <?php if (!isset($_SESSION['admin1'])) : ?>
                         <td><a href="data-edit.php?pet_id=<?= $r['pet_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
-                    <td><a href="#"><i class="fas fa-shopping-cart"></i></a></td>
+                    <td><a href="#"><i class="fas fa-heart"></i></i></a></td>
 
                 </tr>
             <?php endforeach; ?>
