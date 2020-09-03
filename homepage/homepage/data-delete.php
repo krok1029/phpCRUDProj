@@ -5,11 +5,11 @@ $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'data-li
 
 // echo $_GET['pet_id'];
 
-if (empty($_GET['pet_id'])) {
+if (empty($_GET['sid'])) {
     header('Location: ' . $referer);
     exit;
 }
-$pet_id = intval($_GET['pet_id']) ?? 0;
+$pet_id = intval($_GET['sid']) ?? 0;
 
-$pdo->query("DELETE FROM pet_info_master WHERE pet_id=$pet_id ");
+$pdo->query("DELETE FROM pet_info WHERE sid=$sid ");
 header('Location: ' . $referer);
