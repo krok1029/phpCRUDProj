@@ -3,6 +3,13 @@ $page_title = '新增商品';
 $page_name = 'data-insert';
 require __DIR__ . '/parts/__connect_db.php';
 require __DIR__ . '/parts/__admin_required.php';
+
+
+
+
+
+$h_sql = "SELECT * FROM `tag_list`";
+$tag = $pdo->query($h_sql)->fetchAll();
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
 <style>
@@ -71,6 +78,22 @@ require __DIR__ . '/parts/__admin_required.php';
                             <input type="tel" class="form-control" id="description" name="description">
                             <small class="form-text error-msg"></small>
                         </div>
+
+
+                        <!-- /////////tag//////////// -->
+                        <div class="form-group">
+                            <label for="">Tags</label><br>
+                            <?php foreach ($tag as $h) : ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>">
+                                    <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+
+
+
 
                         <button type="submit" class="btn btn-primary">確認</button>
                     </form>
