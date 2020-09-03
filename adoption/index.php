@@ -9,13 +9,32 @@
 </head>
 
 <body>
-    <h2>Link</h2>
-    <a href="./homepage/index.php">首頁</a>
-    <a href="./menbership/index.php">會員</a>
-    <a href="./store/index.php">商城</a>
-    <a href="./cart/index.php">購物車</a>
-    <a href="./social_media/index.php">社群</a>
-    <a href="./adoption/index.php">動物領養</a>
+    <div class="conatiner">
+        <div class="row d-flex flex-row justify-content-center">
+            <div class="col-lg-2 d-flex flex-column p-1 m-3">
+
+                <h2>Link</h2>
+                <a href="../homepage/index.php">首頁</a>
+                <a href="../menbership/index.php">會員</a>
+                <a href="../store/index.php">商城</a>
+                <a href="../cart/index.php">購物車</a>
+                <a href="../social_media/index.php">社群</a>
+                <a href="../adoption/index.php">動物領養</a>
+            </div>
+            <div class="col-lg-5 d-flex flex-column p-1 m-3">
+
+                <h2>Adoption</h2>
+                <h3>
+
+                    <a href="./adoption/data-list.php">清單</a>
+                </h3>
+
+            </div>
+        </div>
+    </div>
+
+
+
 
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
