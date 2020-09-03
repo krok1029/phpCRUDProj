@@ -7,7 +7,7 @@ $perPage = 5; // 每頁有幾筆資料
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-$t_sql = "SELECT COUNT(1) FROM `pet_info_master`";
+$t_sql = "SELECT COUNT(1) FROM `pet_info`";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 // die('~~~'); //exit; // 結束程式
 $totalPages = ceil($totalRows / $perPage);
@@ -23,7 +23,7 @@ if ($totalRows > 0) {
         exit;
     };
 
-    $sql = sprintf("SELECT * FROM `pet_info_master` ORDER BY pet_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `pet_info` ORDER BY sid DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll();
 }
@@ -60,8 +60,6 @@ if ($totalRows > 0) {
 
         </div>
     </div>
-
-
     <table class="table table-striped">
         <!-- `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` -->
         <thead>
@@ -71,18 +69,14 @@ if ($totalRows > 0) {
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
                 <?php endif; ?>
                 <th scope="col">#</th>
-                <th scope="col">序號</th>
-                <th scope="col">名稱</th>
-                <th scope="col">貓咪/狗勾</th>
+                <th scope="col">會員</th>
+                <th scope="col">狗/貓</th>
                 <th scope="col">年齡</th>
-                <th scope="col">所在地區</th>
-                <th scope="col">地址</th>
-                <th scope="col">介紹</th>
-                <th scope="col">建立時間</th>
-                <?php if (isset($_SESSION['admin1'])) : ?>
+                <th scope="col">地區</th>
+                <?php if (isset($_SESSION['admin'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
-                <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+
 
 
             </tr>
@@ -91,24 +85,19 @@ if ($totalRows > 0) {
             <?php foreach ($rows as $r) : ?>
                 <tr>
                     <?php if (!isset($_SESSION['admin1'])) : ?>
-                        <td><a href="data-delete.php?pet_id=<?= $r['pet_id'] ?>" onclick="ifDel(event)" data-sid="<?= $r['pet_id'] ?>">
+                        <td><a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
                     <?php endif; ?>
-                    <td><?= $r['pet_id'] ?></td>
-                    <td><?= $r['name'] ?></td>
+                    <td><?= $r['user_id'] ?></td>
                     <td><?= $r['dog_cat'] ?></td>
                     <td><?= $r['age'] ?></td>
                     <td><?= $r['area'] ?></td>
-                    <td><?= $r['address'] ?></td>
-                    <td><?= $r['description'] ?></td>
-                    <td><?= $r['create_time'] ?></td>
 
-                    <?php if (isset($_SESSION['admin1'])) : ?>
+                    <?php if (isset($_SESSION['admin'])) : ?>
                         <td><a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
-                    <td><a href="#"><i class="fas fa-shopping-cart"></i></a></td>
 
                 </tr>
             <?php endforeach; ?>

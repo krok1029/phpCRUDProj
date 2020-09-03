@@ -21,30 +21,21 @@ if(empty($_POST['sid'])){
     exit;
 }
 
-if(mb_strlen($_POST['name'])<2){
-    $output['code'] = 410;
-    $output['error'] = '姓名長度要大於 2';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
 
 
-
-$sql = "UPDATE `shop_goods` SET 
-    `name`=?,
-    `type`=?,
-    `brand`=?,
-    `pricing`=?,
-    `price`=?
+$sql = "UPDATE `pet_info` SET 
+    `user_id`=?,
+    `dog_cat`=?,
+    `age`=?,
+    `area`=?,
     WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-        $_POST['name'],
-        $_POST['type'],
-        $_POST['brand'],
-        $_POST['pricing'],
-        $_POST['price'],
+        $_POST['user_id'],
+        $_POST['dog_cat'],
+        $_POST['age'],
+        $_POST['area'],
         $_POST['sid'],
 ]);
 

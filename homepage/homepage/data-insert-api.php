@@ -15,29 +15,16 @@ $output = [
 // mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
 
 
-
-if (mb_strlen($_POST['name']) < 2) {
-    $output['code'] = 410;
-    $output['error'] = '姓名長度要大於 2';
-    echo json_encode($output, JSON_UNESCAPED_UNICODE);
-    exit;
-}
-
-
-
-// INSERT INTO `pet_info_master`(`pet_id`, `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`) 
-$sql = "INSERT INTO `pet_info_master`(
- `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`
- ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
+$sql = "INSERT INTO `pet_info`(
+ `user_id`, `dog_cat`, `age`, `area`
+ ) VALUES (?, ?, ?, ?)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['name'],
+    $_POST['user_id'],
     $_POST['dog_cat'],
     $_POST['age'],
     $_POST['area'],
-    $_POST['address'],
-    $_POST['description'],
 ]);
 
 if ($stmt->rowCount()) {
