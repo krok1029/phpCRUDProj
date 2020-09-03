@@ -1,6 +1,6 @@
 <?php
-require __DIR__. '/parts/__connect_db.php';
-require __DIR__. '/parts/__admin_required.php';
+require __DIR__ . '/parts/__connect_db.php';
+require __DIR__ . '/parts/__admin_required.php';
 header('Content-Type: application/json');
 
 $output = [
@@ -16,7 +16,7 @@ $output = [
 
 
 
-if(mb_strlen($_POST['name'])<2){
+if (mb_strlen($_POST['name']) < 2) {
     $output['code'] = 410;
     $output['error'] = '姓名長度要大於 2';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
@@ -25,22 +25,22 @@ if(mb_strlen($_POST['name'])<2){
 
 
 
-
-$sql = "INSERT INTO `shop_goods`(
-`name`, `type`, `brand`,
- `pricing`, `price`, `created_at`
- ) VALUES (?, ?, ?, ?, ?, NOW())";
+// INSERT INTO `pet_info_master`(`pet_id`, `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`) 
+$sql = "INSERT INTO `pet_info_master`(
+ `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`
+ ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-        $_POST['name'],
-        $_POST['type'],
-        $_POST['brand'],
-        $_POST['pricing'],
-        $_POST['price'],
+    $_POST['name'],
+    $_POST['dog_cat'],
+    $_POST['age'],
+    $_POST['area'],
+    $_POST['address'],
+    $_POST['description'],
 ]);
 
-if($stmt->rowCount()){
+if ($stmt->rowCount()) {
     $output['success'] = true;
 }
 
