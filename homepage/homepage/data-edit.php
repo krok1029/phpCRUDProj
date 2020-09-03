@@ -42,7 +42,7 @@ if (empty($row)) {
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
-                            <label for="user_id"><span class="red-stars">**</span> 會員、</label>
+                            <label for="user_id"><span class="red-stars">**</span> 會員</label>
                             <input type="text" class="form-control" id="user_id" name="user_id" required
                             value="<?= htmlentities($row['user_id']) ?>">
                             <small class="form-text error-msg"></small>
@@ -82,10 +82,10 @@ if (empty($row)) {
 </div>
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
-    const $name = document.querySelector('#user_id');
-    const $type = document.querySelector('#dog_cat');
-    const $brand = document.querySelector('#age');
-    const $pricing = document.querySelector('#area');
+    const $user_id = document.querySelector('#user_id');
+    const $dog_cat = document.querySelector('#dog_cat');
+    const $age = document.querySelector('#age');
+    const $area = document.querySelector('#area');
     const r_fields = [$user_id, $dog_cat, $age, $area];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
@@ -99,11 +99,6 @@ if (empty($row)) {
         });
         submitBtn.style.display = 'none';
         // TODO: 檢查資料格式
-        if ($name.value.length < 2) {
-            isPass = false;
-            $name.style.borderColor = 'red';
-            $name.nextElementSibling.innerHTML = '請填寫名稱';
-        }
 
         if (isPass) {
             const fd = new FormData(document.form1);
