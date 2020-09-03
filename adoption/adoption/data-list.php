@@ -90,17 +90,12 @@ if ($totalRows > 0) {
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <?php if (isset($_SESSION['admin1'])) : ?>
-                        <td><a href="data-delete.php?sid=<?= $r['pet_id'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                    <?php if (!isset($_SESSION['admin1'])) : ?>
+                        <td><a href="data-delete.php?pet_id=<?= $r['pet_id'] ?>" onclick="ifDel(event)" data-sid="<?= $r['pet_id'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
-                        <!-- <td><a href="javascript:delete_it(<?= $r['sid'] ?>)">
-                                <i class="fas fa-user-times"></i>
-                            </a>
-                        </td> -->
                     <?php endif; ?>
-                    <td> </td>
                     <td><?= $r['pet_id'] ?></td>
                     <td><?= $r['name'] ?></td>
                     <td><?= $r['dog_cat'] ?></td>
