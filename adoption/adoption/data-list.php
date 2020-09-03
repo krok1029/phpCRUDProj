@@ -66,11 +66,11 @@ if ($totalRows > 0) {
         <!-- `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` -->
         <thead>
             <tr>
-                <?php if (isset($_SESSION['admin1'])) : ?>
+                <?php if (!isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
                 <?php endif; ?>
-                <th scope="col">#</th>
+                <!-- <th scope="col">#</th> -->
                 <th scope="col">序號</th>
                 <th scope="col">名稱</th>
                 <th scope="col">貓咪/狗勾</th>
@@ -79,7 +79,7 @@ if ($totalRows > 0) {
                 <th scope="col">地址</th>
                 <th scope="col">介紹</th>
                 <th scope="col">建立時間</th>
-                <?php if (isset($_SESSION['admin1'])) : ?>
+                <?php if (!isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
                 <th scope="col"><i class="fas fa-shopping-cart"></i></th>
@@ -105,8 +105,8 @@ if ($totalRows > 0) {
                     <td><?= $r['description'] ?></td>
                     <td><?= $r['create_time'] ?></td>
 
-                    <?php if (isset($_SESSION['admin1'])) : ?>
-                        <td><a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
+                    <?php if (!isset($_SESSION['admin1'])) : ?>
+                        <td><a href="data-edit.php?pet_id=<?= $r['pet_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
                     <td><a href="#"><i class="fas fa-shopping-cart"></i></a></td>
 
