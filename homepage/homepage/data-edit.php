@@ -55,7 +55,7 @@ if (empty($row)) {
                         </div>
                         <div class="form-group">
                             <label for="mobile"><span class="red-stars">**</span> 年齡</label>
-                            <input type="text" class="form-control" id="age" name="mobile"
+                            <input type="text" class="form-control" id="age" name="age"
                                    value="<?= htmlentities($row['age']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
@@ -63,6 +63,7 @@ if (empty($row)) {
                             <label for="area">地區</label>
                             <input type="text" class="form-control" id="area" name="area"
                                    value="<?= htmlentities($row['area']) ?>">
+                            <small class="form-text error-msg"></small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -107,6 +108,8 @@ if (empty($row)) {
                     method: 'POST',
                     body: fd
                 })
+                // .then(r => r.text())
+                // .then(r => console.log(r))
                 .then(r => r.json())
                 .then(obj => {
                     console.log(obj);
