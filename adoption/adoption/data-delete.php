@@ -13,3 +13,6 @@ $pet_id = intval($_GET['pet_id']) ?? 0;
 
 $pdo->query("DELETE FROM pet_info_master WHERE pet_id=$pet_id ");
 header('Location: ' . $referer);
+
+$pdo->query("DELETE FROM pet_info_detail WHERE pet_id=$pet_id ");
+header('Location: ' . $referer);
