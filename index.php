@@ -10,7 +10,7 @@
 
 <body>
     <h2>Link</h2>
-    <a href="./homepage/homepage/data-list.php">首頁</a>
+    <a href="./homepage/homepage/pet_info/data-list.php">首頁</a>
     <a href="./menbership/index.php">會員</a>
     <a href="./store/index.php">商城</a>
     <a href="./cart/index.php">購物車</a>
