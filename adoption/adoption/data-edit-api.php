@@ -50,8 +50,33 @@ $stmt->execute([
     $_POST['pet_id'],
 ]);
 
+if (count($_POST['tags']) > 0) {
+    $pet_id = $_POST['pet_id'];
+
+    $pdo->query("DELETE FROM pet_info_detail WHERE pet_id=$pet_id ");
+
+
+    $sql = "insert into pet_info_detail(pet_id,tag_id) values";
+    $sql2 = "";
+
+    for ($i = 0; $i < count($_POST['tags']); $i++) {
+
+        $sql2 = $sql2 . "( " . $pet_id . " , " . $_POST['tags'][$i] . " ) ";
+
+        if ($i < count($_POST['tags']) - 1) {
+            $sql2 = $sql2 . ",";
+        }
+    }
+
+    $sql = $sql . $sql2;
+
+    if (isset($_POST['tags'])) {
+        $stmt = $pdo->query($sql);
+    }
+}
+
+
 if ($stmt->rowCount()) {
     $output['success'] = true;
 }
-
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
