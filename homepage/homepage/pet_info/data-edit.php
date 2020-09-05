@@ -16,6 +16,17 @@ if (empty($row)) {
     exit;
 }
 
+$sql = "SELECT * FROM `tag_list` where visible = 1";
+$tag = $pdo->query($sql)->fetchAll();
+
+$sql = "SELECT tag_id FROM `pet_info_detail` where sid=$sid";
+$tagCheck = $pdo->query($sql)->fetchAll();
+
+$tagList = [];
+for ($i = 0; $i < count($tagCheck); $i++) {
+
+    $tagList[] = $tagCheck[$i]['tag_id'];
+}
 
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
@@ -47,12 +58,22 @@ if (empty($row)) {
                             value="<?= htmlentities($row['user_id']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label for="dog_cat"><span class="red-stars">**</span> 狗貓</label>
                             <input type="text" class="form-control" id="dog_cat" name="dog_cat"
                                    value="<?= htmlentities($row['dog_cat']) ?>">
                             <small class="form-text error-msg"></small>
-                        </div>
+                        </div> -->
+                        <div class="form-group">
+                            <label for="category_sid"><span class="red-stars">**</span> 貓咪/狗勾</label><br>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Radio1" value="cat" name="dog_cat" <?php echo $row['dog_cat'] == 'cat' ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="Radio1">貓咪</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" id="Radio2" value="dog" name="dog_cat" <?php echo $row['dog_cat'] == 'dog' ? 'checked' : '' ?>>
+                                <label class="form-check-label" for="Radio2">狗勾</label>
+                            </div>
                         <div class="form-group">
                             <label for="mobile"><span class="red-stars">**</span> 年齡</label>
                             <input type="text" class="form-control" id="age" name="age"
@@ -64,6 +85,16 @@ if (empty($row)) {
                             <input type="text" class="form-control" id="area" name="area"
                                    value="<?= htmlentities($row['area']) ?>">
                             <small class="form-text error-msg"></small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="">Tags</label><br>
+                            <?php foreach ($tag as $h) : ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>" <?= in_array($h['tag_id'], $tagList) ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -87,7 +118,7 @@ if (empty($row)) {
     const $dog_cat = document.querySelector('#dog_cat');
     const $age = document.querySelector('#age');
     const $area = document.querySelector('#area');
-    const r_fields = [$user_id, $dog_cat, $age, $area];
+    const r_fields = [];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
