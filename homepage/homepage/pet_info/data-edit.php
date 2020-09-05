@@ -53,9 +53,8 @@ for ($i = 0; $i < count($tagCheck); $i++) {
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
-                            <label for="user_id"><span class="red-stars">**</span> 會員</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" required
-                            value="<?= htmlentities($row['user_id']) ?>">
+                            <label for="user_id"><span class="red-stars"></span> 會員</label>
+                            <input type="text" class="form-control" id="user_id" name="user_id" required readonly="readonly" value="<?= htmlentities($row['user_id']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <!-- <div class="form-group">
@@ -74,31 +73,29 @@ for ($i = 0; $i < count($tagCheck); $i++) {
                                 <input class="form-check-input" type="radio" id="Radio2" value="dog" name="dog_cat" <?php echo $row['dog_cat'] == 'dog' ? 'checked' : '' ?>>
                                 <label class="form-check-label" for="Radio2">狗勾</label>
                             </div>
-                        <div class="form-group">
-                            <label for="mobile"><span class="red-stars">**</span> 年齡</label>
-                            <input type="text" class="form-control" id="age" name="age"
-                                   value="<?= htmlentities($row['age']) ?>">
-                            <small class="form-text error-msg"></small>
-                        </div>
-                        <div class="form-group">
-                            <label for="area">地區</label>
-                            <input type="text" class="form-control" id="area" name="area"
-                                   value="<?= htmlentities($row['area']) ?>">
-                            <small class="form-text error-msg"></small>
-                        </div>
+                            <div class="form-group">
+                                <label for="mobile"><span class="red-stars">**</span> 年齡</label>
+                                <input type="text" class="form-control" id="age" name="age" value="<?= htmlentities($row['age']) ?>">
+                                <small class="form-text error-msg"></small>
+                            </div>
+                            <div class="form-group">
+                                <label for="area">地區</label>
+                                <input type="text" class="form-control" id="area" name="area" value="<?= htmlentities($row['area']) ?>">
+                                <small class="form-text error-msg"></small>
+                            </div>
 
-                        <div class="form-group">
-                            <label for="">Tags</label><br>
-                            <?php foreach ($tag as $h) : ?>
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>" <?= in_array($h['tag_id'], $tagList) ? 'checked' : '' ?>>
-                                    <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
-                                </div>
-                            <?php endforeach; ?>
-                        </div>
+                            <div class="form-group">
+                                <label for="">Tags</label><br>
+                                <?php foreach ($tag as $h) : ?>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>" <?= in_array($h['tag_id'], $tagList) ? 'checked' : '' ?>>
+                                        <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
+                                    </div>
+                                <?php endforeach; ?>
+                            </div>
 
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form> 
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
             </div>
 
