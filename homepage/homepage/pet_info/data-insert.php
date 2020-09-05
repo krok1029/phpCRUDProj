@@ -32,13 +32,13 @@ $tag = $pdo->query($h_sql)->fetchAll();
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <div class="form-group">
                             <label for="user_id"><span class="red-stars">**</span> 會員</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" required>
+                            <input type="text" class="form-control" id="user_id" name="user_id">
                             <small class="form-text error-msg"></small>
                         </div>
 
                         <!-- <div class="form-group">
                             <label for="dog_cat"><span class="red-stars">**</span> 貓/狗</label>
-                            <input type="type" class="form-control" id="dog_cat" name="dog_cat" required>
+                            <input type="text" class="form-control" id="dog_cat" name="dog_cat">
                             <small class="form-text error-msg"></small>
                         </div> -->
 
@@ -57,12 +57,12 @@ $tag = $pdo->query($h_sql)->fetchAll();
 
                         <div class="form-group">
                             <label for="age"><span class="red-stars">**</span> 年齡</label>
-                            <input type="tel" class="form-control" id="age" name="age">
+                            <input type="text" class="form-control" id="age" name="age">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="area"><span class="red-stars">**</span> 地區</label>
-                            <input type="tel" class="form-control" id="area" name="area">
+                            <input type="text" class="form-control" id="area" name="area">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
@@ -95,7 +95,7 @@ $tag = $pdo->query($h_sql)->fetchAll();
     const $dog_cat = document.querySelector('#dog_cat');
     const $age = document.querySelector('#age');
     const $area = document.querySelector('#area');
-    const r_fields = [$user_id, $dog_cat, $age, $area];
+    const r_fields = [];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 

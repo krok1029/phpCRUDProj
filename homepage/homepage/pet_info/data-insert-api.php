@@ -27,6 +27,39 @@ $stmt->execute([
     $_POST['area'],
 ]);
 
+if (count($_POST['tags']) > 0) {
+    $sql = "select sid from pet_info where user_id = ? and dog_cat = ? and age = ? and area = ? ";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        $_POST['user_id'],
+        $_POST['dog_cat'],
+        $_POST['age'],
+        $_POST['area'],
+
+    ]);
+    $pet_id = $stmt->fetch(PDO::FETCH_NUM)[0];
+
+
+    $sql = "insert into pet_info_detail(user_id,tag_id) values";
+    $sql2 = "";
+
+    for ($i = 0; $i < count($_POST['tags']); $i++) {
+
+        $sql2 = $sql2 . "( " . $pet_id . " , " . $_POST['tags'][$i] . " ) ";
+
+        if ($i < count($_POST['tags']) - 1) {
+            $sql2 = $sql2 . ",";
+        }
+    }
+
+    $sql = $sql . $sql2;
+
+    if (isset($_POST['tags'])) {
+        $stmt = $pdo->query($sql);
+    }
+}
+
 if ($stmt->rowCount()) {
     $output['success'] = true;
 }
