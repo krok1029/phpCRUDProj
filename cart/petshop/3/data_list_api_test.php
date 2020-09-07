@@ -23,7 +23,7 @@ if ($totalRows > 0) {
     if ($page > $totalPages) $page = $totalPages;
     $output['page'] = $page;
 
-    $sql = sprintf("SELECT * FROM `cart_list_01` ORDER BY order_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `cart_list_01` ORDER BY cart_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $stmt = $pdo->query($sql);
     $output['rows'] = $stmt->fetchAll();
 }

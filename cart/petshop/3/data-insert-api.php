@@ -32,6 +32,11 @@ $sql = "INSERT INTO `shop_goods`(
  ) VALUES (?, ?, ?, ?, ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
+/*if ($stmt) {
+    echo "Success";
+} else {
+    echo "Error";
+}*/
 $stmt->execute([
     $_POST['name'],
     $_POST['type'],

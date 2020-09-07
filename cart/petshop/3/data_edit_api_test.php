@@ -12,12 +12,12 @@ $output = [
 
 $sql = "UPDATE `cart_list_01` SET 
     `quantity`=?
-    WHERE `order_id`=?";
+    WHERE `cart_id`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['quantity'],
-    $_POST['order_id'],
+    $_POST['cart_id'],
 ]);
 
 if ($stmt->rowCount()) {
