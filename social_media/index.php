@@ -14,7 +14,7 @@
     <a href="./menbership/index.php">會員</a>
     <a href="./store/index.php">商城</a>
     <a href="./cart/index.php">購物車</a>
-    <a href="./social_media/index.php">社群</a>
+    <a href="./social_media/data-list.php">社群</a>
     <a href="./adoption/index.php">動物領養</a>
 
 
