@@ -4,22 +4,30 @@ $page_name = 'data-edit';
 require __DIR__ . '/parts/__connect_db.php';
 require __DIR__ . '/parts/__admin_required.php';
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
-if (empty($sid)) {
-    header('Location: data-list.php');
-    exit;
-}
-
-$sql = " SELECT * FROM pet_info WHERE sid=$sid";
+// if (empty($sid)) {
+//     header('Location: data-list.php');
+//     exit;
+// }
+$user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+// $sql = " SELECT * FROM pet_info WHERE sid=$sid";
+$sql = " SELECT * FROM pet_info WHERE user_id=$user_id";
 $row = $pdo->query($sql)->fetch();
-if (empty($row)) {
-    header('Location: data-list.php');
-    exit;
-}
+// if (empty($row)) {
+//     header('Location: data-list.php');
+//     exit;
+// }
 
 $sql = "SELECT * FROM `tag_list` where visible = 1";
 $tag = $pdo->query($sql)->fetchAll();
 
-$sql = "SELECT tag_id FROM `pet_info_detail` where sid=$sid";
+// $user_id = isset($_GET['user_id']) ? intval($_GET['user_id']) : 0;
+if (empty($user_id)) {
+    header('Location: data-list.php');
+    exit;
+}
+$sql = "SELECT tag_id FROM `pet_info_detail` where user_id=$user_id";
+// $sql = "SELECT tag_id FROM `pet_info_detail` where sid=$sid";
+
 $tagCheck = $pdo->query($sql)->fetchAll();
 
 $tagList = [];
@@ -85,7 +93,7 @@ for ($i = 0; $i < count($tagCheck); $i++) {
                             </div>
 
                             <div class="form-group">
-                                <label for="">Tags</label><br>
+                                <label for="">特徵</label><br>
                                 <?php foreach ($tag as $h) : ?>
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>" <?= in_array($h['tag_id'], $tagList) ? 'checked' : '' ?>>

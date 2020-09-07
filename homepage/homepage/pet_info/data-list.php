@@ -96,7 +96,7 @@ if ($totalRows > 0) {
                     <td><?= $r['area'] ?></td>
 
                     <?php if (isset($_SESSION['admin'])) : ?>
-                        <td><a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="data-edit.php?user_id=<?= $r['user_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
 
                 </tr>
