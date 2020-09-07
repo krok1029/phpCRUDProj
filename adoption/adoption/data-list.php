@@ -101,21 +101,16 @@ if ($totalRows > 0) {
                     $sql = sprintf("SELECT b.tag_id , b.description
                             FROM `pet_info_detail` a join tag_list b  on a.tag_id = b.tag_id
                             where  pet_id = %s ", $r['pet_id']);
-                    // $sql = $sql . $r['pet_id'];
                     $stmtd = $pdo->query($sql);
                     $rowsd = $stmtd->fetchAll();
                     $tagStr = '';
-                    // if ($r['pet_id'] == '8190') {
-                    // echo print_r($rowsd);
-                    // echo print_r($rowsd[0]['tag_id']);
-                    // echo count($rowsd);
                     for ($i = 0; $i < count($rowsd); $i++) {
                         $tagStr = $tagStr . $rowsd[$i]['description'] . ',';
                     }
                     // }
 
                     ?>
-                    <td data-toggle="popover" data-placement="bottom" data-content="<?= $tagStr ?>" style="cursor:pointer"><?= $r['name'] ?></td>
+                    <td data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="<?= $tagStr ?>" style="cursor:pointer"><?= $r['name'] ?></td>
                     <td><?= $r['dog_cat'] ?></td>
                     <td><?= $r['age'] ?></td>
                     <td><?= $r['area'] ?></td>
