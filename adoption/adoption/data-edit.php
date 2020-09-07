@@ -17,6 +17,24 @@ if (empty($row)) {
 }
 
 
+
+$sql = "SELECT * FROM `tag_list`";
+$tag = $pdo->query($sql)->fetchAll();
+
+$sql = "SELECT tag_id FROM `pet_info_detail` where pet_id=$pet_id";
+$tagCheck = $pdo->query($sql)->fetchAll();
+
+$tagList = [];
+for ($i = 0; $i < count($tagCheck); $i++) {
+
+    $tagList[] = $tagCheck[$i]['tag_id'];
+}
+
+// if (in_array("4", $tagList)) {
+//     echo "Got 4";
+// }
+// print_r($tagList);
+
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
 <style>
@@ -87,6 +105,23 @@ if (empty($row)) {
                             <input type="tel" class="form-control" id="description" name="description" value="<?= htmlentities($row['description']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
+
+
+                        <!-- /////////tag//////////// -->
+                        <div class="form-group">
+                            <label for="">Tags</label><br>
+                            <?php foreach ($tag as $h) : ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id'] ?>" <?= in_array($h['tag_id'], $tagList) ? 'checked' : '' ?>>
+                                    <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
+                                </div>
+                            <?php endforeach; ?>
+                        </div>
+
+
+
+
+
                         <button type="submit" class="btn btn-primary">確認</button>
                     </form>
                 </div>

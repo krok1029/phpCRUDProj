@@ -15,7 +15,6 @@ $output = [
 // mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
 
 
-
 if (mb_strlen($_POST['name']) < 2) {
     $output['code'] = 410;
     $output['error'] = '姓名長度要大於 2';
@@ -40,6 +39,40 @@ $stmt->execute([
     $_POST['description'],
 ]);
 
+///////// handle tags
+if (count($_POST['tags']) > 0) {
+    $sql = "select pet_id from pet_info_master where name = ? and dog_cat = ? and age = ? and area = ? and address = ? and description = ?";
+
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute([
+        $_POST['name'],
+        $_POST['dog_cat'],
+        $_POST['age'],
+        $_POST['area'],
+        $_POST['address'],
+        $_POST['description'],
+    ]);
+    $pet_id = $stmt->fetch(PDO::FETCH_NUM)[0];
+
+
+    $sql = "insert into pet_info_detail(pet_id,tag_id) values";
+    $sql2 = "";
+
+    for ($i = 0; $i < count($_POST['tags']); $i++) {
+
+        $sql2 = $sql2 . "( " . $pet_id . " , " . $_POST['tags'][$i] . " ) ";
+
+        if ($i < count($_POST['tags']) - 1) {
+            $sql2 = $sql2 . ",";
+        }
+    }
+
+    $sql = $sql . $sql2;
+
+    if (isset($_POST['tags'])) {
+        $stmt = $pdo->query($sql);
+    }
+}
 if ($stmt->rowCount()) {
     $output['success'] = true;
 }
