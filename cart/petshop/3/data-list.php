@@ -122,7 +122,7 @@ if ($totalRows > 0) {
 
                     <?php if (isset($_SESSION['admin'])) : ?>
                         <td>
-                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>" data-sid="<?= $r['goods_id'] ?>">
+                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a></td>
                     <?php endif; ?>

@@ -15,9 +15,21 @@ if (empty($_GET['goods_id'])) {
     exit;
 }
 $goods_id = intval($_GET['goods_id']) ?? 0;
+$sid = intval($_GET['sid']) ?? 0;
+$price = intval($_GET['price']) ?? 0;
+$name = $_GET['name'];
 
-$stmt = $pdo->query("insert into `cart_list_01` (`goods_id`,`name`,`price`,`quantity`, `created_at`)
-SELECT `goods_id`, `name`,  `price`, 1, NOW()  FROM `shop_goods` WHERE goods_id = $goods_id");
+$sql = "insert into `cart_list_01` (`goods_id`,`admins_id`,`name`,`price`,`quantity`, `created_at`) VALUES (?, ?, ?, ? , ?, NOW())";
+
+$stmt = $pdo->prepare($sql);
+
+$stmt->execute([
+    $goods_id,
+    $sid,
+    $name,
+    $price,
+    1,
+]);
 
 
 if ($stmt->rowCount()) {

@@ -15,6 +15,8 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
 $total_price = 0;
 $rows = [];
+$array = [];
+
 if ($totalRows > 0) {
     if ($page < 1) {
         header('Location: order_insert.php');
@@ -32,13 +34,8 @@ if ($totalRows > 0) {
 
 $row = [];
 
-$sql2 = " SELECT * FROM `pet_shop_admins` ORDER BY  admins_id";
-$row = $pdo->query($sql2)->fetch();
-
-// $admins_id = isset($_GET['admins_id']) ? intval($_GET['admins_id']) : 0;
-
-// $sql2 = " SELECT * FROM pet_shop_admins WHERE admins_id=$admins_id";
-// $row = $pdo->query($sql2)->fetch();
+$sql = " SELECT * FROM `pet_shop_admins` ORDER BY  admins_id";
+$row = $pdo->query($sql)->fetch();
 
 ?>
 
@@ -56,6 +53,7 @@ $row = $pdo->query($sql2)->fetch();
 </style>
 
 <form name="form1" onsubmit="checkForm(); return false;" novalidate>
+
     <div class="container">
         <div class="row">
             <div class="col d-flex justify-content-end">
@@ -96,7 +94,7 @@ $row = $pdo->query($sql2)->fetch();
                         <div class="card-body">
                             <h5 class="card-title">填寫訂單資料</h5>
 
-                            <!-- <form name="form" onsubmit="checkForm(); return false;" novalidate> -->
+
                             <input type="hidden" name="admins_id" value="<?= $row['admins_id'] ?>">
 
                             <div class="form-group">
@@ -115,7 +113,7 @@ $row = $pdo->query($sql2)->fetch();
                                 <small class="form-text error-msg"></small>
                             </div>
                             <button type="submit" class="btn btn-primary">確認</button>
-                            <!-- </form> -->
+
                         </div>
                     </div>
 
@@ -128,8 +126,8 @@ $row = $pdo->query($sql2)->fetch();
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
-                            <th scope="col" type="hidden">cart_id</th>
-                            <th scope="col">商品</th>
+                            <!-- <th scope="col" style="display: none;">cart_id</th> -->
+                            <th scope="col">商品
                             <th scope="col">價格</th>
                             <th scope="col">數量</th>
                             <th scope="col">小計</th>
@@ -138,7 +136,8 @@ $row = $pdo->query($sql2)->fetch();
                     <tbody>
                         <?php foreach ($rows as $r) : ?>
                             <tr>
-                                <td type="hidden"><?= $r['cart_id'] ?></td>
+                                <!-- $array($r['cart_id']) -->
+                                <!-- <td style="display: none;"><?= $r['cart_id'] ?></td> -->
                                 <td><?= $r['name'] ?></td>
                                 <td><?= $r['price'] ?></td>
                                 <td><?= $r['quantity'] ?></td>
@@ -199,7 +198,7 @@ $row = $pdo->query($sql2)->fetch();
 
         if (isPass) {
             const fd = new FormData(document.form1);
-
+            // fd.append($array);
             fetch('order_insert_api.php', {
                     method: 'POST',
                     body: fd
