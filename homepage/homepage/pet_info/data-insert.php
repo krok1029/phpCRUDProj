@@ -3,6 +3,10 @@ $page_title = '新增';
 $page_name = 'data-insert';
 require __DIR__ . '/parts/__connect_db.php';
 require __DIR__ . '/parts/__admin_required.php';
+
+
+$h_sql = "SELECT * FROM `tag_list` where visible = 1";
+$tag = $pdo->query($h_sql)->fetchAll();
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
 <style>
@@ -28,38 +32,47 @@ require __DIR__ . '/parts/__admin_required.php';
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
                         <div class="form-group">
                             <label for="user_id"><span class="red-stars">**</span> 會員</label>
-                            <input type="text" class="form-control" id="user_id" name="user_id" required>
+                            <input type="text" class="form-control" id="user_id" name="user_id">
                             <small class="form-text error-msg"></small>
                         </div>
-
-                        <div class="form-group">
-                            <label for="dog_cat"><span class="red-stars">**</span> 貓/狗</label>
-                            <input type="type" class="form-control" id="dog_cat" name="dog_cat" required>
-                            <small class="form-text error-msg"></small>
-                        </div>
-
 
                         <!-- <div class="form-group">
+                            <label for="dog_cat"><span class="red-stars">**</span> 貓/狗</label>
+                            <input type="text" class="form-control" id="dog_cat" name="dog_cat">
+                            <small class="form-text error-msg"></small>
+                        </div> -->
+
+
+                        <div class="form-group">
                             <label for="category_sid"><span class="red-stars">**</span> 貓咪/狗勾</label><br>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="Radio1" value="cat" name="dog_cat">
-                                <label class="form-check-label" for="Radio1">貓咪</label>
+                                <label class="form-check-label" for="Radio1">貓</label>
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" id="Radio2" value="dog" name="dog_cat">
-                                <label class="form-check-label" for="Radio2">狗勾</label>
+                                <label class="form-check-label" for="Radio2">狗</label>
                             </div>
-                        </div> -->
+                        </div>
 
                         <div class="form-group">
                             <label for="age"><span class="red-stars">**</span> 年齡</label>
-                            <input type="tel" class="form-control" id="age" name="age">
+                            <input type="text" class="form-control" id="age" name="age">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
                             <label for="area"><span class="red-stars">**</span> 地區</label>
-                            <input type="tel" class="form-control" id="area" name="area">
+                            <input type="text" class="form-control" id="area" name="area">
                             <small class="form-text error-msg"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="">特徵</label><br>
+                            <?php foreach ($tag as $h) : ?>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="checkbox" name="tags[]" id="tags<?= $h['tag_id'] ?>" value="<?= $h['tag_id']?>">
+                                    <label class="form-check-label" for="tags<?= $h['tag_id'] ?>"><?= $h['description'] ?></label>
+                                </div>
+                            <?php endforeach; ?>
                         </div>
                         
                         <button type="submit" class="btn btn-primary">確認</button>
@@ -82,7 +95,7 @@ require __DIR__ . '/parts/__admin_required.php';
     const $dog_cat = document.querySelector('#dog_cat');
     const $age = document.querySelector('#age');
     const $area = document.querySelector('#area');
-    const r_fields = [$user_id, $dog_cat, $age, $area];
+    const r_fields = [];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
