@@ -1,10 +1,8 @@
 <?php
 
-//$db_host = "192.168.27.82";
-$db_host = "localhost";
-$db_name = "pet_shop";
-//$db_user = "shinder";
-//$db_pass = "admin";
+$db_host = "192.168.27.115";
+//$db_host = "localhost";
+$db_name = "pet_adoption_proj";
 $db_user = "root";
 $db_pass = "";
 
