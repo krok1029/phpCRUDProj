@@ -1,7 +1,7 @@
 <?php
 
-$db_host = "127.0.0.1";
-$db_name = "member_center";
+$db_host = "192.168.27.115";
+$db_name = "pet_adoption_proj";
 $db_user = "root";
 $db_pass = "";
 

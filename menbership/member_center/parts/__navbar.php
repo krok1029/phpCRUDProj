@@ -21,7 +21,7 @@ if (!isset($page_name)) $page_name = '';
                 </li> -->
             </ul>
             <!-- 未登入的功能限制 -->
-            <!-- <ul class="navbar-nav">
+            <ul class="navbar-nav">
                 <?php if (isset($_SESSION['admin'])) : ?>
                     <li class="nav-item">
                         <a class="nav-link"><?= $_SESSION['admin']['nickname'] ?></a>
@@ -34,7 +34,7 @@ if (!isset($page_name)) $page_name = '';
                     <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?>">
                         <a class="nav-link" href="<?= WEB_ROOT ?>/login.php">登入</a>
                     </li>
-                <?php endif; ?> -->
+                <?php endif; ?>
 
             </ul>
         </div>
