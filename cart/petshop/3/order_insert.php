@@ -126,8 +126,8 @@ $row = $pdo->query($sql)->fetch();
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
-                            <!-- <th scope="col" style="display: none;">cart_id</th> -->
-                            <th scope="col">商品
+                            <th scope="col" style="display: none;">cart_id</th>
+                            <th scope="col">商品</th>
                             <th scope="col">價格</th>
                             <th scope="col">數量</th>
                             <th scope="col">小計</th>
@@ -137,7 +137,7 @@ $row = $pdo->query($sql)->fetch();
                         <?php foreach ($rows as $r) : ?>
                             <tr>
                                 <!-- $array($r['cart_id']) -->
-                                <!-- <td style="display: none;"><?= $r['cart_id'] ?></td> -->
+                                <td style="display: none;"><?= $r['cart_id'] ?></td>
                                 <td><?= $r['name'] ?></td>
                                 <td><?= $r['price'] ?></td>
                                 <td><?= $r['quantity'] ?></td>
