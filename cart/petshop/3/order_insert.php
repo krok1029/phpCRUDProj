@@ -15,7 +15,6 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 $totalPages = ceil($totalRows / $perPage);
 $total_price = 0;
 $rows = [];
-$array = [];
 
 if ($totalRows > 0) {
     if ($page < 1) {
@@ -32,10 +31,16 @@ if ($totalRows > 0) {
     $rows = $stmt->fetchAll();
 }
 
-$row = [];
+$array = [];
+$sql = " SELECT * FROM `order_list_01` ORDER BY order_id";
+$array = $pdo->query($sql)->fetch();
 
-$sql = " SELECT * FROM `pet_shop_admins` ORDER BY  admins_id";
+$row = [];
+$sql = " SELECT * FROM `pet_shop_admins` ORDER BY admins_id";
 $row = $pdo->query($sql)->fetch();
+
+
+$cartIdArray = [];
 
 ?>
 
@@ -95,6 +100,7 @@ $row = $pdo->query($sql)->fetch();
                             <h5 class="card-title">填寫訂單資料</h5>
 
 
+
                             <input type="hidden" name="admins_id" value="<?= $row['admins_id'] ?>">
 
                             <div class="form-group">
@@ -126,7 +132,8 @@ $row = $pdo->query($sql)->fetch();
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
-                            <th scope="col" style="display: none;">cart_id</th>
+                            <th scope="col" style="">order_id</th>
+                            <th scope="col" style="">cart_id</th>
                             <th scope="col">商品</th>
                             <th scope="col">價格</th>
                             <th scope="col">數量</th>
@@ -136,8 +143,9 @@ $row = $pdo->query($sql)->fetch();
                     <tbody>
                         <?php foreach ($rows as $r) : ?>
                             <tr>
-                                <!-- $array($r['cart_id']) -->
-                                <td style="display: none;"><?= $r['cart_id'] ?></td>
+                                <?php array_push($cartIdArray, $r['cart_id']) ?>
+                                <td style=""> <?= $array['order_id'] ?></td>
+                                <td style=""><?= $r['cart_id'] ?></td>
                                 <td><?= $r['name'] ?></td>
                                 <td><?= $r['price'] ?></td>
                                 <td><?= $r['quantity'] ?></td>
@@ -146,6 +154,9 @@ $row = $pdo->query($sql)->fetch();
                             </tr>
 
                         <?php endforeach; ?>
+                        <input type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
+                        <!--變字串-->
+                        <?php implode(", ", $cartIdArray)  ?>
                     </tbody>
                 </table>
                 <div class="form-group">
