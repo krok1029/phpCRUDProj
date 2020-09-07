@@ -13,7 +13,7 @@
         <div class="row d-flex flex-row justify-content-center">
             <div class="col-lg-2 d-flex flex-column p-1 m-3">
 
-                <h2>Link</h2>
+                <h2>後臺管理</h2>
                 <a href="../homepage/index.php">首頁</a>
                 <a href="../menbership/index.php">會員</a>
                 <a href="../store/index.php">商城</a>

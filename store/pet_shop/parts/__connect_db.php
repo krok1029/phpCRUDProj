@@ -18,8 +18,8 @@ $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 
 # $pdo->query("use mytest;"); // 萬一出現 no databases selected 的錯誤
 
-define('WEB_ROOT', '/trainning-test/pet_shop');
+define('WEB_ROOT', '/phpCRUDProj/store/pet_shop');
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }

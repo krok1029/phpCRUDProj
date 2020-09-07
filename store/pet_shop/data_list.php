@@ -151,21 +151,21 @@ if (isset($_POST['search'])) {
 
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <!-- <?php if (isset($_SESSION['admin1'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data_delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
                         </td>
-                    <?php endif; ?> -->
+                    <?php endif; ?>
                     <td><?= $r['sid'] ?></td>
                     <td><?= $r['name'] ?></td>
 
-                    <!-- <td>
+                    <td>
                         <?= $r['category_sid'] ?>
                         <?php foreach ($cates as $c) : ?>
                             <?= ($c['sid'] == $r['category_sid']) ? '.' . $c['name'] : '' ?>
                         <?php endforeach; ?>
-                    </td> -->
+                    </td>
 
 
                     <td><?= $r['brand'] ?></td>
