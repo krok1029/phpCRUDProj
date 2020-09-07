@@ -68,7 +68,7 @@ if ($totalRows > 0) {
                     <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
                 <?php endif; ?>
-                <th scope="col">#</th>
+                <th scope="col"><i class="fas fa-trash-alt"></i></th>
                 <th scope="col">會員</th>
                 <th scope="col">狗/貓</th>
                 <th scope="col">年齡</th>
@@ -96,7 +96,7 @@ if ($totalRows > 0) {
                     <td><?= $r['area'] ?></td>
 
                     <?php if (isset($_SESSION['admin'])) : ?>
-                        <td><a href="data-edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
+                        <td><a href="data-edit.php?user_id=<?= $r['user_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
 
                 </tr>

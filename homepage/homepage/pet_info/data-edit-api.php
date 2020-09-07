@@ -54,6 +54,32 @@ $stmt->execute([
         $_POST['sid'],
 ]);
 
+if (count($_POST['tags']) > 0) {
+    $user_id = $_POST['user_id'];
+
+    $pdo->query("DELETE FROM pet_info_detail WHERE user_id=$user_id ");
+
+
+    $sql = "insert into pet_info_detail(user_id,tag_id) values";
+    $sql2 = "";
+
+    for ($i = 0; $i < count($_POST['tags']); $i++) {
+
+        $sql2 = $sql2 . "( " . $user_id . " , " . $_POST['tags'][$i] . " ) ";
+
+        if ($i < count($_POST['tags']) - 1) {
+            $sql2 = $sql2 . ",";
+        }
+    }
+
+    $sql = $sql . $sql2;
+
+    if (isset($_POST['tags'])) {
+        $stmt = $pdo->query($sql);
+    }
+}
+
+
 if($stmt->rowCount()){
     $output['success'] = true;
 }
