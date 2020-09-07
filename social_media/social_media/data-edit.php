@@ -1,5 +1,5 @@
 <?php
-$page_title = '修改資料';
+$page_title = '編輯資料';
 $page_name = 'data-edit';
 require __DIR__ . './parts/__connect_db.php';
 
@@ -9,12 +9,20 @@ if (empty($sid)) {
     exit;
 }
 
-$sql = "SELECT * FROM `forum_article` WHERE sid=$sid";
+$sql = " SELECT * FROM forum_article WHERE sid=$sid";
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
     header('Location: data-list.php');
     exit;
 }
+
+$ptype_sql = "SELECT * FROM pet_type WHERE 1";
+$ptype = $pdo->query($ptype_sql)->fetchAll();
+
+$issue_sql = "SELECT * FROM forum_issue WHERE 1";
+$issue = $pdo->query($issue_sql)->fetchAll();
+
+
 
 ?>
 
@@ -32,24 +40,46 @@ if (empty($row)) {
 <div class="container">
     <div class="row">
         <div class="col-lg-6">
+            <div id="infobar" class="alert alert-success" role="alert" style="display: none">
+                A simple success alert—check it out!
+            </div>
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">編輯資料</h5>
-                    <form name="form1" onsubmit="return checkForm()">
+                    <form name="form1" onsubmit="checkForm(); return false; " novalidate>
+                        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
                         <div class="form-group">
                             <label for="title"><span class="red-stars">**</span> title</label>
-                            <input type="text" class="form-control" id="title" name="title" value="<?= htmlentities($row['title']) ?>">
+                            <input type="text" class="form-control" id="title" name="title" required value="<?= htmlentities($row['title']) ?>">
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
+                            <label for="ptype_sid">分類</label>
+                            <select class="form-control" id="ptype_sid" name="ptype_sid" >
+                                <?php foreach ($ptype as $p) : ?>
+                                    <option value="<?= $p['sid'] ?>"><?= $p['type'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="issue_sid">主題</label>
+                            <select class="form-control" id="issue_sid" name="issue_sid">
+                                <?php foreach ($issue as $i) : ?>
+                                    <option value="<?= $i['sid'] ?>"><?= $i['name'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
                             <label for="content"><span class="red-stars">**</span> content</label>
-                            <textarea class="form-control" id="content" name="content" cols="30" rows="10"><?= htmlentities($row['content']) ?></textarea>
+                            <textarea class="form-control" id="content" name="content" cols="30" rows="10" required><?= htmlentities($row['content']) ?></textarea>
                             <small class="form-text error-msg"></small>
 
                         </div>
                         <div class="form-group">
                             <label for="picture">picture</label>
-                            <input type="text" class="form-control" id="picture" name="picture">
+                            <input type="text" class="form-control" id="picture" name="picture" value="<?= htmlentities($row['picture']) ?>">
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -62,17 +92,62 @@ if (empty($row)) {
 
 <?php require __DIR__ . './parts/__scripts.php'; ?>
 <script>
+    const $title = document.querySelector('#title');
+    const $content = document.querySelector('#content');
+    const r_fields = [$title, $content];
+    const infobar = document.querySelector('#infobar');
+    const submitBtn = document.querySelector('button[type=submit]');
+
     function checkForm() {
-        const fd = new FormData(document.form1);
-        fetch('data-edit-api.php', {
-                method: 'POST',
-                body: fd
-            })
-            .then(r => r.text())
-            .then(str => {
-                console.log(str);
-            })
-        return false;
+        let isPass = true;
+
+        r_fields.forEach(el => {
+            el.style.borderColor = '#CCCCCC';
+            el.nextElementSibling.innerHTML = '';
+        })
+        submitBtn.style.display = 'none';
+
+        if ($title.value.length < 2) {
+            isPass = false;
+            $title.style.borderColor = 'red';
+            $title.nextElementSibling.innerHTML = '標題請勿少於2字';
+        }
+        if ($content.value.length < 15) {
+            isPass = false;
+            $content.style.borderColor = 'red';
+            $content.nextElementSibling.innerHTML = '內容至少15字';
+        }
+
+        if (isPass) {
+            const fd = new FormData(document.form1);
+            fetch('data-edit-api.php', {
+                    method: 'POST',
+                    body: fd
+                })
+                .then(r => r.json())
+                .then(obj => {
+                    console.log(obj);
+                    if (obj.success) {
+                        infobar.innerHTML = '修改成功';
+                        infobar.className = "alert alert-success";
+
+                        setTimeout(() => {
+                            location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "data-list.php" ?>';
+                        }, 3000)
+
+                    } else {
+                        infobar.innerHTML = obj.error || '資料沒有修改';
+                        infobar.className = "alert alert-danger";
+
+                        submitBtn.style.display = 'block';
+                    }
+                    infobar.style.display = 'block';
+                });
+        } else {
+            submitBtn.style.display = 'block';
+        }
+
+
     }
 </script>
 <?php require __DIR__ . './parts/__html_foot.php'; ?>
