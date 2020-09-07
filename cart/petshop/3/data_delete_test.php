@@ -5,11 +5,11 @@ require __DIR__ . '/__admin_required.php';
 
 $referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'data_list_test.php';
 
-if (empty($_GET['order_id'])) {
+if (empty($_GET['cart_id'])) {
     header('Location: ' . $referer);
     exit;
 }
-$order_id = intval($_GET['order_id']) ?? 0;
+$cart_id = intval($_GET['cart_id']) ?? 0;
 
-$pdo->query("DELETE FROM cart_list_01 WHERE order_id=$order_id ");
+$pdo->query("DELETE FROM cart_list_01 WHERE cart_id=$cart_id ");
 header('Location: ' . $referer);

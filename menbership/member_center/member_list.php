@@ -39,6 +39,7 @@ if ($totalRows > 0) {
         <div class="col d-flex justify-content-end">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
+                    <li class="page-item"><a class="page-link" href="?page=1">第一頁</a></li>
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
                         <a class="page-link" href="?page=<?= $page - 1 ?>">
                             <i class="fas fa-arrow-circle-left"></i>
@@ -57,6 +58,7 @@ if ($totalRows > 0) {
                             <i class="fas fa-arrow-circle-right"></i>
                         </a>
                     </li>
+                    <li class="page-item"><a class="page-link" href="?page= <?= $totalPages ?>">最後頁</a></li>
                 </ul>
             </nav>
 
@@ -69,8 +71,8 @@ if ($totalRows > 0) {
         <thead>
             <tr>
                 <th scope="col"><i class="fas fa-trash-alt"></i></th>
-                <th scope="col"><i class="fas fa-user-times"></i></th>
-                <th scope="col">#</th>
+                <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
+                <th scope="col">序號</th>
                 <th scope="col">姓名</th>
                 <th scope="col">出生年月日</th>
                 <th scope="col">連絡電話</th>
@@ -86,9 +88,10 @@ if ($totalRows > 0) {
                     <td><a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                             <i class="fas fa-trash-alt"></i>
                         </a></td>
-                    <td><a href="javascript:delete_it(<?= $r['sid'] ?>)">
+                    <!-- JavaScrip的寫法 -->
+                    <!-- <td><a href="javascript:delete_it(<?= $r['sid'] ?>)">
                             <i class="fas fa-user-times"></i>
-                        </a></td>
+                        </a></td> -->
                     <td><?= $r['sid'] ?></td>
                     <td><?= $r['name'] ?></td>
                     <td><?= $r['birthday'] ?></td>

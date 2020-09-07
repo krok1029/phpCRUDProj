@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/parts/__connect_db.php';
 //新增未登入的功能限制
-// require __DIR__ . '/parts/__admin_required.php';
+require __DIR__ . '/parts/__admin_required.php';
 header('Content-Type: application/json');
 
 $output = [
@@ -37,20 +37,22 @@ if (!preg_match('/^09\d{2}-?\d{3}-?\d{3}$/', $_POST['mobile'])) {
 }
 
 
-$sql = "UPDATE `address_book` SET 
+$sql = "UPDATE `member_list` SET 
     `name`=?,
-    `email`=?,
-    `mobile`=?,
     `birthday`=?,
+    `telephone`=?,
+    `mobile`=?,
+    `email`=?,
     `address`=?
     WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['name'],
-    $_POST['email'],
-    $_POST['mobile'],
     $_POST['birthday'],
+    $_POST['telephone'],
+    $_POST['mobile'],
+    $_POST['email'],
     $_POST['address'],
     $_POST['sid'],
 ]);

@@ -1,7 +1,7 @@
 <?php
 require __DIR__ . '/__connect_db.php';
 require __DIR__ . '/__admin_required.php';
-header('Content-Type: application/json');
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'data-list.php';
 
 $output = [
     'success' => false,
@@ -10,28 +10,32 @@ $output = [
     'error' => ''
 ];
 
+if (empty($_GET['goods_id'])) {
+    header('Location: ' . $referer);
+    exit;
+}
+$goods_id = intval($_GET['goods_id']) ?? 0;
+$sid = intval($_GET['sid']) ?? 0;
+$price = intval($_GET['price']) ?? 0;
+$name = $_GET['name'];
 
-$sql = "INSERT INTO `cart_list_01`(
- `admins_id`,`name`, `price`,`created_at`
- ) VALUES (?, ?, ?, NOW())";
+$sql = "insert into `cart_list_01` (`goods_id`,`admins_id`,`name`,`price`,`quantity`, `created_at`) VALUES (?, ?, ?, ? , ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
+
 $stmt->execute([
-
-    $_SESSION['admin'],
-    $_POST['name'],
-
-    $_POST['price'],
+    $goods_id,
+    $sid,
+    $name,
+    $price,
+    1,
 ]);
 
-//`goods_id`,
-//`quantity`,
-//$_POST['goods_id'],
-//$_POST['quantity'],
-//判斷重複商品
 
 if ($stmt->rowCount()) {
     $output['success'] = true;
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
+
+header('Location: ' . $referer);

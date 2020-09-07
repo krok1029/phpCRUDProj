@@ -3,7 +3,7 @@ $page_title = '新增資料';
 $page_name = 'data-insert';
 require __DIR__ . '/parts/__connect_db.php';
 //新增未登入的功能限制
-// require __DIR__ . '/parts/__admin_required.php';
+require __DIR__ . '/parts/__admin_required.php';
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>
 <style>
@@ -30,6 +30,11 @@ require __DIR__ . '/parts/__connect_db.php';
                         <div class="form-group">
                             <label for="name"><span class="red-stars">**</span> 姓名</label>
                             <input type="text" class="form-control" id="name" name="name" required>
+                            <small class="form-text error-msg"></small>
+                        </div>
+                        <div class="form-group">
+                            <label for="password"><span class="red-stars">**</span>密碼(請輸入6字元的英文或數字)</label>
+                            <input type="text" class="form-control" id="password" name="password" required>
                             <small class="form-text error-msg"></small>
                         </div>
                         <div class="form-group">
@@ -76,10 +81,11 @@ require __DIR__ . '/parts/__connect_db.php';
     const telephone_pattern = /^\d{2}-\d{4}-\d{4}$/;
     const mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
     const $name = document.querySelector('#name');
+    const $password = document.querySelector('#password');
     const $email = document.querySelector('#email');
     const $telephone = document.querySelector('#telephone');
     const $mobile = document.querySelector('#mobile');
-    const r_fields = [$name, $email, $telephone, $mobile];
+    const r_fields = [$name, $password, $email, $telephone, $mobile];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
@@ -96,6 +102,12 @@ require __DIR__ . '/parts/__connect_db.php';
             isPass = false;
             $name.style.borderColor = 'red';
             $name.nextElementSibling.innerHTML = '請填寫正確的姓名';
+        }
+
+        if ($password.value.length < 6) {
+            isPass = false;
+            $password.style.borderColor = 'red';
+            $password.nextElementSibling.innerHTML = '請輸入6字元的英文或數字';
         }
 
         if (!email_pattern.test($email.value)) {

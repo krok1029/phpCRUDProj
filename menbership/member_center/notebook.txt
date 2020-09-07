@@ -1,8 +1,0 @@
-1.匯入資料後新增日期
-UPDATE `member_list` SET `create_at` = NOW()
-
-2.匯入資料後補上電話號碼前的0
-UPDATE `member_list` SET `mobile`= concat('0', mobile)
-
-//連接兩個字串
-concat(欄位或文字, 欄位或文字)

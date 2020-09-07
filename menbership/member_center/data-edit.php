@@ -3,7 +3,7 @@ $page_title = '編輯資料';
 $page_name = 'data-edit';
 require __DIR__ . '/parts/__connect_db.php';
 //新增未登入的功能限制
-// require __DIR__ . '/parts/__admin_required.php';
+require __DIR__ . '/parts/__admin_required.php';
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 if (empty($sid)) {
     header('Location: member_list.php');

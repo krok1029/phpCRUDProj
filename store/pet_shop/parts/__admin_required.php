@@ -5,6 +5,6 @@ if (!isset($_SESSION)) {
 }
 
 if (!isset($_SESSION['admin1'])) {
-    header('Location: data-list.php');
+    header('Location: login.php');
     exit;
 }

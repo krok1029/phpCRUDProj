@@ -14,7 +14,7 @@ $account = isset($_POST['account']) ? $_POST['account'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
 $sql = "SELECT `sid`, `account`, `nickname` 
-        FROM `admins` 
+        FROM `pet_shop_admins` 
         WHERE `account`=? AND `password`=SHA1(?)";
 
 $stmt = $pdo->prepare($sql);

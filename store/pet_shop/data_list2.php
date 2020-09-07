@@ -1,6 +1,6 @@
 <?php
 $page_title = '商品列表';
-$page_name = 'data-list2';
+$page_name = 'data_list2';
 require __DIR__. '/parts/__connect_db.php';
 
 ?>
@@ -98,7 +98,7 @@ require __DIR__. '/parts/__connect_db.php';
     };
 
     function getData(page=1) {
-        fetch('data-list2-api.php?page='+ page)
+        fetch('data_list2_api.php?page='+ page)
             .then(r => r.json())
             .then(obj => {
                 console.log(obj);
