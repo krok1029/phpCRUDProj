@@ -1,10 +1,8 @@
 <?php
 
-//$db_host = "192.168.27.82";
-$db_host = "localhost";
-$db_name = "pet_shop";
-//$db_user = "shinder";
-//$db_pass = "admin";
+$db_host = "192.168.27.115";
+//$db_host = "localhost";
+$db_name = "pet_adoption_proj";
 $db_user = "root";
 $db_pass = "";
 
@@ -20,8 +18,8 @@ $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 
 # $pdo->query("use mytest;"); // 萬一出現 no databases selected 的錯誤
 
-define('WEB_ROOT', '/trainning-test/pet_shop');
+define('WEB_ROOT', '/phpCRUDProj/store/pet_shop');
 
-if(!isset($_SESSION)){
+if (!isset($_SESSION)) {
     session_start();
 }

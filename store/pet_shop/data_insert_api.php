@@ -27,14 +27,14 @@ if(mb_strlen($_POST['name'])<2){
 
 
 $sql = "INSERT INTO `shop_goods`(
-`name`, `type`, `brand`,
+`name`, `category_sid`, `brand`,
  `pricing`, `price`, `created_at`
  ) VALUES (?, ?, ?, ?, ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
         $_POST['name'],
-        $_POST['type'],
+        $_POST['category_sid'],
         $_POST['brand'],
         $_POST['pricing'],
         $_POST['price'],

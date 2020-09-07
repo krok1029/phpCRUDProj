@@ -32,20 +32,22 @@ if(mb_strlen($_POST['name'])<2){
 
 $sql = "UPDATE `shop_goods` SET 
     `name`=?,
-    `type`=?,
+    `category_sid`=?,
     `brand`=?,
     `pricing`=?,
-    `price`=?
+    `price`=?,
+    `shelf_status` =?
     WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
         $_POST['name'],
-        $_POST['type'],
+        $_POST['category_sid'],
         $_POST['brand'],
         $_POST['pricing'],
         $_POST['price'],
-        $_POST['sid'],
+        $_POST['shelf_status'],
+        $_POST['sid']
 ]);
 
 if($stmt->rowCount()){

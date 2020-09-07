@@ -28,7 +28,7 @@ require __DIR__. '/parts/__connect_db.php';
 <script>
     function checkForm(){
         const fd = new FormData(document.form1);
-        fetch('login-api.php', {
+        fetch('login_api.php', {
             method: 'POST',
             body: fd
         })
@@ -37,7 +37,7 @@ require __DIR__. '/parts/__connect_db.php';
                 console.log(obj);
                 if(obj.success){
                     alert('登入成功');
-                    location.href = 'data-list.php';
+                    location.href = 'data_list.php';
                 } else {
                     alert('登入失敗');
                 }
