@@ -1,9 +1,10 @@
 <?php
 
-$db_host = "localhost";
+$db_host = "192.168.27.115";
+//$db_host = "localhost";
 $db_name = "pet_adoption_proj";
-$db_user = "anne";
-$db_pass = "1215";
+$db_user = "root";
+$db_pass = "";
 
 $dsn = "mysql:host={$db_host};dbname={$db_name}";
 
@@ -15,8 +16,10 @@ $pdo_options = [
 
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 
+# $pdo->query("use mytest;"); // 萬一出現 no databases selected 的錯誤
+
+define('WEB_ROOT', '/phpCRUDProj/cart/petshop');
+
 if (!isset($_SESSION)) {
     session_start();
 }
-
-# $pdo->query("use mytest;"); // 萬一出現 no databases selected 的錯誤

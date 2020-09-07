@@ -195,7 +195,7 @@ if (isset($_POST['search'])) {
                     <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data_edit.php?sid=<?= $r['sid'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
-                    <td><a href="#"><i class="fas fa-shopping-cart"></i></a></td>
+                    <td><a href="http://localhost/phpCRUDProj/cart/petshop/3/data_list_test.php"><i class="fas fa-shopping-cart"></i></a></td>
 
                 </tr>
             <?php endforeach; ?>
