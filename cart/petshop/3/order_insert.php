@@ -30,23 +30,16 @@ if ($totalRows > 0) {
     $rows = $stmt->fetchAll();
 }
 
-// $row = [];
+$row = [];
 
-// $sql2 = " SELECT * FROM `pet_shop_admins` ORDER BY  admins_id";
+$sql2 = " SELECT * FROM `pet_shop_admins` ORDER BY  admins_id";
+$row = $pdo->query($sql2)->fetch();
+
+// $admins_id = isset($_GET['admins_id']) ? intval($_GET['admins_id']) : 0;
+
+// $sql2 = " SELECT * FROM pet_shop_admins WHERE admins_id=$admins_id";
 // $row = $pdo->query($sql2)->fetch();
 
-$admins_id = isset($_GET['admins_id']) ? intval($_GET['admins_id']) : 0;
-if (empty($admins_id)) {
-    header('Location: data_list_test.php');
-    exit;
-}
-
-$sql2 = " SELECT * FROM pet_shop_admins WHERE admins_id=$admins_id";
-$row = $pdo->query($sql2)->fetch();
-if (empty($row)) {
-    header('Location: data_list_test.php');
-    exit;
-}
 ?>
 
 <?php require __DIR__ . '/__html_head.php'; ?>
@@ -105,6 +98,7 @@ if (empty($row)) {
 
                             <!-- <form name="form" onsubmit="checkForm(); return false;" novalidate> -->
                             <input type="hidden" name="admins_id" value="<?= $row['admins_id'] ?>">
+
                             <div class="form-group">
                                 <label for="nickname"><span class="red-stars">**</span> 收件人名稱</label>
                                 <input type="text" class="form-control" id="nickname" name="nickname" required value="<?= htmlentities($row['nickname']) ?>">
@@ -134,6 +128,7 @@ if (empty($row)) {
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
+                            <th scope="col" type="hidden">cart_id</th>
                             <th scope="col">商品</th>
                             <th scope="col">價格</th>
                             <th scope="col">數量</th>
@@ -143,6 +138,7 @@ if (empty($row)) {
                     <tbody>
                         <?php foreach ($rows as $r) : ?>
                             <tr>
+                                <td type="hidden"><?= $r['cart_id'] ?></td>
                                 <td><?= $r['name'] ?></td>
                                 <td><?= $r['price'] ?></td>
                                 <td><?= $r['quantity'] ?></td>

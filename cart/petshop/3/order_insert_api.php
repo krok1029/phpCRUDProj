@@ -10,6 +10,7 @@ $output = [
     'error' => ''
 ];
 
+
 //cellphone_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
 
 if (mb_strlen($_POST['nickname']) < 2) {
@@ -39,7 +40,7 @@ $stmt->execute([
 if ($stmt->rowCount()) {
     $output['success'] = true;
 }
-echo "1>>" + $stmt;
+
 /////////////////////
 
 $sql2 = "INSERT INTO `order_list_02`(
@@ -57,18 +58,33 @@ if ($stmt2->rowCount()) {
     $output['success'] = true;
 }
 
-echo "2>>" + $stmt2;
+///////////////////
+$referer = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'order_insert.php';
 ///////////////////
 
-$stmt3 = $pdo->query("insert into `order_list_02` (`goods_id`,`quantity`)
+if (empty($_GET['cart_id'])) {
+    header('Location: ' . $referer);
+    exit;
+}
+
+$cart_id = intval($_GET['cart_id']) ?? 0;
+
+$stmt3 = $pdo->query("INSERT INTO `order_list_02` (`goods_id`,`quantity`)
 SELECT `goods_id`, `quantity` FROM `cart_list_01` WHERE cart_id = $cart_id");
 
 
 if ($stmt3->rowCount()) {
     $output['success'] = true;
 }
-echo "3>>" + $stmt3;
+
 ///////////////////
+
+if (empty($_GET['order_id'])) {
+    header('Location: ' . $referer);
+    exit;
+}
+
+$order_id = intval($_GET['order_id']) ?? 0;
 
 $stmt4 = $pdo->query("insert into `order_list_02` (`order_id`)
 SELECT `order_id`  FROM `order_list_01` WHERE order_id = $order_id");
@@ -76,7 +92,7 @@ SELECT `order_id`  FROM `order_list_01` WHERE order_id = $order_id");
 if ($stmt4->rowCount()) {
     $output['success'] = true;
 }
-echo "4>>" + $stmt4;
+
 /////////////////////
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
