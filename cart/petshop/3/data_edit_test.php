@@ -4,13 +4,13 @@ $page_name = 'data_edit_test';
 require __DIR__ . '/__connect_db.php';
 require __DIR__ . '/__admin_required.php';
 
-$order_id = isset($_GET['order_id']) ? intval($_GET['order_id']) : 0;
-if (empty($order_id)) {
+$cart_id = isset($_GET['cart_id']) ? intval($_GET['cart_id']) : 0;
+if (empty($cart_id)) {
     header('Location: data_list_test.php');
     exit;
 }
 
-$sql = " SELECT * FROM cart_list_01 WHERE order_id=$order_id";
+$sql = " SELECT * FROM cart_list_01 WHERE cart_id=$cart_id";
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
     header('Location: data_list_test.php');
@@ -41,7 +41,7 @@ if (empty($row)) {
                     <h5 class="card-title">編輯資料</h5>
 
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
-                        <input type="hidden" name="order_id" value="<?= $row['order_id'] ?>">
+                        <input type="hidden" name="cart_id" value="<?= $row['cart_id'] ?>">
                         <div class="form-group">
                             <label for="name"><span class="red-stars">**</span> name</label>
                             <input type="text" readonly="readonly" class="form-control" id="name" name="name" required value="<?= htmlentities($row['name']) ?>">

@@ -35,6 +35,9 @@ if ($totalRows > 0) {
 <div class="container">
     <div class="row">
         <div class="col d-flex justify-content-end">
+            <div id="infobar" class="alert alert-success" role="alert" style="display: none">
+                A simple success alert—check it out!
+            </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
@@ -61,71 +64,76 @@ if ($totalRows > 0) {
         </div>
     </div>
 
-    <form name="form1" onsubmit="checkForm(); return false;" novalidate>
-        <table class="table table-striped">
 
-            <thead>
+    <table class="table table-striped">
+
+        <thead>
+            <tr>
+                <?php if (isset($_SESSION['admin'])) : ?>
+                    <th scope="col"><i class="fas fa-trash-alt"></i></th>
+
+                <?php endif; ?>
+                <th scope="col">#</th>
+                <th scope="col">名稱</th>
+                <th scope="col">類型</th>
+                <th scope="col">品牌</th>
+                <th scope="col">定價</th>
+                <th scope="col">售價</th>
+                <th scope="col">販售數量</th>
+                <th scope="col">折扣</th>
+                <th scope="col">收藏數</th>
+                <th scope="col">建立時間</th>
+                <th scope="col">上架狀態</th>
+                <?php if (isset($_SESSION['admin'])) : ?>
+                    <th scope="col"><i class="fas fa-edit"></i></th>
+                <?php endif; ?>
+
+                <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rows as $r) : ?>
+
                 <tr>
                     <?php if (isset($_SESSION['admin'])) : ?>
-                        <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                        <td><a href="data-delete.php?goods_id=<?= $r['goods_id'] ?>" onclick="ifDel(event)" data-goods_id="<?= $r['goods_id'] ?>">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
 
                     <?php endif; ?>
-                    <th scope="col">#</th>
-                    <th scope="col">名稱</th>
-                    <th scope="col">類型</th>
-                    <th scope="col">品牌</th>
-                    <th scope="col">定價</th>
-                    <th scope="col">售價</th>
-                    <th scope="col">販售數量</th>
-                    <th scope="col">折扣</th>
-                    <th scope="col">收藏數</th>
-                    <th scope="col">建立時間</th>
-                    <th scope="col">上架狀態</th>
+                    <td><?= $r['goods_id'] ?></td>
+                    <td><?= $r['name'] ?></td>
+                    <td><?= $r['type'] ?></td>
+                    <td><?= $r['brand'] ?></td>
+                    <td><?= $r['pricing'] ?></td>
+                    <td><?= $r['price'] ?></td>
+                    <td><?= $r['sale'] ?></td>
+                    <td><?= $r['discount'] ?></td>
+                    <td><?= $r['heart'] ?></td>
+                    <td><?= $r['created_at'] ?></td>
+                    <td><?= $r['shelf_status'] ?></td>
+
                     <?php if (isset($_SESSION['admin'])) : ?>
-                        <th scope="col"><i class="fas fa-edit"></i></th>
+                        <td><a href="data-edit.php?goods_id=<?= $r['goods_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
 
-                    <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+                    <?php if (isset($_SESSION['admin'])) : ?>
+                        <td>
+                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
+                                <i class="fas fa-shopping-cart"></i>
+                            </a></td>
+                    <?php endif; ?>
 
 
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($rows as $r) : ?>
-                    <tr>
-                        <?php if (isset($_SESSION['admin'])) : ?>
-                            <td><a href="data-delete.php?goods_id=<?= $r['goods_id'] ?>" onclick="ifDel(event)" data-goods_id="<?= $r['goods_id'] ?>">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
 
-                        <?php endif; ?>
-                        <td><?= $r['goods_id'] ?></td>
-                        <td><?= $r['name'] ?></td>
-                        <td><?= $r['type'] ?></td>
-                        <td><?= $r['brand'] ?></td>
-                        <td><?= $r['pricing'] ?></td>
-                        <td><?= $r['price'] ?></td>
-                        <td><?= $r['sale'] ?></td>
-                        <td><?= $r['discount'] ?></td>
-                        <td><?= $r['heart'] ?></td>
-                        <td><?= $r['created_at'] ?></td>
-                        <td><?= $r['shelf_status'] ?></td>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-                        <?php if (isset($_SESSION['admin'])) : ?>
-                            <td><a href="data-edit.php?goods_id=<?= $r['goods_id'] ?>"><i class="fas fa-edit"></i></a></td>
-                        <?php endif; ?>
-
-                        <?php if (isset($_SESSION['admin'])) : ?>
-                            <td><button type="submit" class="btn btn-primary"><i class="fas fa-shopping-cart"></i></button></td>
-                        <?php endif; ?>
-
-
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </form>
 
 </div>
 <?php include __DIR__ . '/__scripts.php'; ?>

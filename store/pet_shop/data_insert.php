@@ -1,9 +1,19 @@
 <?php
 $page_title = '新增商品';
-$page_name = 'data-insert';
+$page_name = 'data_insert';
 require __DIR__. '/parts/__connect_db.php';
 require __DIR__. '/parts/__admin_required.php';
 ?>
+
+<!-- 類別 -->
+<?php 
+
+
+$c_sql = "SELECT * FROM shop_goods_type";
+
+$cates = $pdo->query($c_sql)->fetchAll();
+?>
+<!-- 類別結束 -->
 <?php require __DIR__. '/parts/__html_head.php'; ?>
 <style>
     span.red-stars {
@@ -30,11 +40,25 @@ require __DIR__. '/parts/__admin_required.php';
                             <input type="text" class="form-control" id="name" name="name" required>
                             <small class="form-text error-msg"></small>
                         </div>
+                        
+
                         <div class="form-group">
-                            <label for="type"><span class="red-stars">**</span> 類型</label>
-                            <input type="type" class="form-control" id="type" name="type">
+                            <label for="category_sid">類型</label>
+                            <select class="form-control" id="category_sid" name="category_sid" data-val="<?= $row['category_sid'] ?>">
+                                <?php foreach ($cates as $c) : ?>
+                                    <option value="<?= $c['sid'] ?>"><?= $c['name'] ?></option>
+                                <?php endforeach; ?>
+                            </select>
                             <small class="form-text error-msg"></small>
                         </div>
+
+
+                        <!-- <div class="form-group">
+                            <label for="category_sid"><span class="red-stars">**</span> 類型</label>
+                            <input type="category_sid" class="form-control" id="category_sid" name="category_sid">
+                            <small class="form-text error-msg"></small>
+                        </div> -->
+                        
                         <div class="form-group">
                             <label for="brand"><span class="red-stars">**</span> 品牌</label>
                             <input type="tel" class="form-control" id="brand" name="brand">
@@ -68,11 +92,15 @@ require __DIR__. '/parts/__admin_required.php';
 <?php include __DIR__. '/parts/__scripts.php'; ?>
 <script>
     const $name = document.querySelector('#name');
-    const $type = document.querySelector('#type');
+    const $category_sid = document.querySelector('#category_sid');
+    let val = $category_sid.getAttribute('data-val');
+    $category_sid.value = val;
+    document.form1.category_sid.value = val;
+    // const $type = document.querySelector('#type');
     const $brand = document.querySelector('#brand');
     const $pricing = document.querySelector('#pricing');
     const $price = document.querySelector('#price');
-    const r_fields = [$name, $type, $brand, $pricing, $price];
+    const r_fields = [$name, $category_sid, $brand, $pricing, $price];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
 
@@ -94,7 +122,7 @@ require __DIR__. '/parts/__admin_required.php';
         if(isPass) {
             const fd = new FormData(document.form1);
 
-            fetch('data-insert-api.php', {
+            fetch('data_insert_api.php', {
                 method: 'POST',
                 body: fd
             })
@@ -108,7 +136,7 @@ require __DIR__. '/parts/__admin_required.php';
                         //     infobar.classList.replace('alert-danger', 'alert-success')
                         // }
                         setTimeout(()=>{
-                            location.href = 'data-list.php';
+                            location.href = 'data_list.php';
                         }, 3000)
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
