@@ -132,8 +132,8 @@ $cartIdArray = [];
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
-                            <th scope="col" style="">order_id</th>
-                            <th scope="col" style="">cart_id</th>
+                            <th scope="col" style="display:none">order_id</th>
+                            <th scope="col" style="display:none">cart_id</th>
                             <th scope="col">商品</th>
                             <th scope="col">價格</th>
                             <th scope="col">數量</th>
@@ -142,17 +142,18 @@ $cartIdArray = [];
                     </thead>
                     <tbody>
                         <?php foreach ($rows as $r) : ?>
-                            <tr>
-                                <?php array_push($cartIdArray, $r['cart_id']) ?>
-                                <td style=""> <?= $array['order_id'] ?></td>
-                                <td style=""><?= $r['cart_id'] ?></td>
-                                <td><?= $r['name'] ?></td>
-                                <td><?= $r['price'] ?></td>
-                                <td><?= $r['quantity'] ?></td>
-                                <td><?= $r['price'] * $r['quantity'] ?></td>
-                                <?php $total_price = $total_price + ($r['price'] * $r['quantity']) ?>
-                            </tr>
-
+                            <?php if (empty($r['is_buy'])) : ?>
+                                <tr>
+                                    <?php array_push($cartIdArray, $r['cart_id']) ?>
+                                    <td style="display:none"> <?= $array['order_id'] ?></td>
+                                    <td style="display:none"><?= $r['cart_id'] ?></td>
+                                    <td><?= $r['name'] ?></td>
+                                    <td><?= $r['price'] ?></td>
+                                    <td><?= $r['quantity'] ?></td>
+                                    <td><?= $r['price'] * $r['quantity'] ?></td>
+                                    <?php $total_price = $total_price + ($r['price'] * $r['quantity']) ?>
+                                </tr>
+                            <?php endif; ?>
                         <?php endforeach; ?>
                         <input type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
                         <!--變字串-->
