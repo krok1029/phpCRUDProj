@@ -9,6 +9,7 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 $t_sql = "SELECT COUNT(1) FROM `forum_article`";
 $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
+
 // die('~~~'); //exit; // 結束程式
 $totalPages = ceil($totalRows / $perPage);
 
@@ -30,6 +31,12 @@ if ($totalRows > 0) {
 ?>
 
 <?php require __DIR__ . './parts/__html_head.php'; ?>
+<style>
+    td {
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 <?php require __DIR__ . './parts/__navbar.php'; ?>
 <div class="container">
     <div class="row">
@@ -59,45 +66,53 @@ if ($totalRows > 0) {
 
         </div>
     </div>
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th scope="col"><i class="fas fa-trash-alt"></i></th>
-                <th scope="col"><i class="fas fa-edit"></i></th>
-                <th scope="col">#</th>
-                <th scope="col">標題</th>
-                <th scope="col">內容</th>
-                <th scope="col">圖片</th>
-                <th scope="col">建立時間</th>
-                <th scope="col">最後更新</th>
-                <th scope="col">點擊數</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($rows as $r) : ?>
+    <div class="row">
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>
-                        <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="data-edit.php?sid=<?= $r['sid'] ?>">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
-                    <td><?= $r['sid'] ?></td>
-                    <td><?= $r['title'] ?></td>
-                    <td><?= $r['content'] ?></td>
-                    <td><?= $r['picture'] ?></td>
-                    <td><?= $r['created_at'] ?></td>
-                    <td><?= $r['Last_updated'] ?></td>
-                    <td><?= $r['clicks'] ?></td>
+                    <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                    <th scope="col"><i class="fas fa-edit"></i></th>
+                    <th scope="col">#</th>
+                    <th scope="col">圖片</th>
+                    <th scope="col">建立時間</th>
+                    <th scope="col">最後更新</th>
+                    <th scope="col">標題</th>
+                    <th scope="col">分類</th>
+                    <th scope="col">主題</th>
+                    <th scope="col">內容</th>
+                    <th scope="col">點擊數</th>
                 </tr>
-            <?php endforeach; ?>
+            </thead>
+            <tbody>
+                <div class="row">
 
-        </tbody>
-    </table>
+                </div>
+                <?php foreach ($rows as $r) : ?>
+                    <tr>
+                        <td>
+                            <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                        <td><?= $r['sid'] ?></td>
+                        <td><?= $r['picture'] ?></td>
+                        <td><?= $r['created_at'] ?></td>
+                        <td><?= $r['Last_updated'] ?></td>
+                        <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
+                        <td style=""><?= strip_tags($r['content']) ?></td>
+                        <td><?= $r['clicks'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </tbody>
+        </table>
+    </div>
+
 </div>
 
 <?php require __DIR__ . './parts/__scripts.php'; ?>
