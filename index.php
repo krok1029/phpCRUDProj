@@ -64,7 +64,7 @@ if(! isset($page_name)) $page_name='';
                     <a class="nav-link" href="http://localhost/phpCRUDProj/store/pet_shop/data_list_test.php">購物車</a>
                 </li>
                 <li class="nav-item <?= $page_name=='data_insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="./social_media/index.php">社群</a>
+                    <a class="nav-link" href="./social_media/social_media/data-list.php">社群</a>
                 </li>
                 <li class="nav-item <?= $page_name=='data_insert' ? 'active' : '' ?>">
                     <a class="nav-link" href="./adoption/adoption/data-list.php">動物領養</a>

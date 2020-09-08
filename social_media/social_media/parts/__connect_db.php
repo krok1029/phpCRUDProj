@@ -1,9 +1,14 @@
 <?php
 
-$db_host = "localhost";
-$db_name = "pet_social_media";
-$db_user = "afei";
-$db_pass = "smilefrog";
+$db_host = "192.168.27.115";
+//$db_host = "localhost";
+$db_name = "pet_adoption_proj";
+$db_user = "root";
+$db_pass = "";
+// $db_host = "localhost";
+// $db_name = "pet_social_media";
+// $db_user = "afei";
+// $db_pass = "smilefrog";
 
 $dsn = "mysql:host={$db_host};dbname={$db_name}";
 
@@ -15,4 +20,4 @@ $pdo_options = [
 
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 
-define('WEB_ROOT2', '/phpCRUDProj');
+define('WEB_ROOT2', '/phpCRUDProj/social_media/social_media');
