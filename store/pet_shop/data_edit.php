@@ -3,13 +3,13 @@ $page_title = '編輯商品';
 $page_name = 'data_edit';
 require __DIR__ . '/parts/__connect_db.php';
 require __DIR__ . '/parts/__admin_required.php';
-$sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
-if (empty($sid)) {
+$goods_id = isset($_GET['goods_id']) ? intval($_GET['goods_id']) : 0;
+if (empty($goods_id)) {
     header('Location: data_list.php');
     exit;
 }
 
-$sql = " SELECT * FROM shop_goods WHERE sid=$sid";
+$sql = " SELECT * FROM shop_goods WHERE goods_id=$goods_id";
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
     header('Location: data_list.php');
@@ -46,7 +46,7 @@ $cates = $pdo->query($c_sql)->fetchAll();
                     <h5 class="card-title">編輯商品</h5>
 
                     <form name="form1" onsubmit="checkForm(); return false;" novalidate>
-                        <input type="hidden" name="sid" value="<?= $row['sid'] ?>">
+                        <input type="hidden" name="goods_id" value="<?= $row['goods_id'] ?>">
                         <div class="form-group">
                             <label for="name"><span class="red-stars">**</span> 名稱</label>
                             <input type="text" class="form-control" id="name" name="name" required value="<?= htmlentities($row['name']) ?>">

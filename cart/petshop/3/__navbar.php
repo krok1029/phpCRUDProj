@@ -12,10 +12,10 @@ if (!isset($page_name)) $page_name = '';
             <ul class="navbar-nav mr-auto">
 
                 <li class="nav-item <?= $page_name == 'data-list2' ? 'active' : '' ?>">
-                    <a class="nav-link" href="./data-list.php">商品列表</a>
+                    <a class="nav-link" href="http://localhost/phpCRUDProj/store/pet_shop/data_list.php">商品列表</a>
                 </li>
                 <li class="nav-item <?= $page_name == 'data-insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="./data-insert.php">新增商品</a>
+                    <a class="nav-link" href="http://localhost/phpCRUDProj/store/pet_shop/data_insert.php">新增商品</a>
                 </li>
                 <li class="nav-item <?= $page_name == 'data_list_test' ? 'active' : '' ?>">
                     <a class="nav-link" href="./data_list_test.php">購物車列表</a>
