@@ -94,6 +94,9 @@ if (isset($_POST['search'])) {
         <!-- 印出搜尋結果結束 -->
 
         <div class="col d-flex justify-content-end">
+            <div id="infobar" class="alert alert-success" role="alert" style="display: none">
+                A simple success alert—check it out!
+            </div>
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
@@ -145,7 +148,7 @@ if (isset($_POST['search'])) {
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
                 <?php if (isset($_SESSION['admin1'])) : ?>
-                <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+                    <th scope="col"><i class="fas fa-shopping-cart"></i></th>
                 <?php endif; ?>
             </tr>
         </thead>
@@ -199,12 +202,15 @@ if (isset($_POST['search'])) {
                     <?php endif; ?>
 
                     <!-- <td><a href="http://localhost/phpCRUDProj/cart/petshop/3/data_list_test.php"><i class="fas fa-shopping-cart"></i></a></td> -->
+
+                    <!-- 下為購物車 -->
                     <?php if (isset($_SESSION['admin1'])) : ?>
                         <td>
-                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
+                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a></td>
                     <?php endif; ?>
+                    <!-- 購物車結束 -->
                 </tr>
             <?php endforeach; ?>
         </tbody>
@@ -252,7 +258,7 @@ if (isset($_POST['search'])) {
                         infobar.className = "alert alert-success";
 
                         setTimeout(() => {
-                            location.href = 'data-list.php';
+                            location.href = 'data_list.php';
                         }, 3000)
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
