@@ -70,7 +70,7 @@ if ($totalRows > 0) {
             <!-- `cart_id`, `name`, `price`, `quantity` -->
             <thead>
                 <tr>
-                    <?php if (isset($_SESSION['admin'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <?php endif; ?>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
@@ -78,7 +78,7 @@ if ($totalRows > 0) {
                     <th scope="col">價格</th>
                     <th scope="col">數量</th>
                     <th scope="col">小計</th>
-                    <?php if (isset($_SESSION['admin'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <th scope="col"><i class="fas fa-edit"></i></th>
                     <?php endif; ?>
                 </tr>
@@ -86,7 +86,7 @@ if ($totalRows > 0) {
             <tbody>
                 <?php foreach ($rows as $r) : ?>
                     <tr>
-                        <?php if (isset($_SESSION['admin'])) : ?>
+                        <?php if (isset($_SESSION['admin1'])) : ?>
                             <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
                                     <i class="fas fa-trash-alt"></i>
                                 </a>
@@ -98,7 +98,7 @@ if ($totalRows > 0) {
                         <td><?= $r['quantity'] ?></td>
                         <td><?= $r['price'] * $r['quantity'] ?></td>
                         <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
-                        <?php if (isset($_SESSION['admin'])) : ?>
+                        <?php if (isset($_SESSION['admin1'])) : ?>
                             <td><a href="data_edit_test.php?cart_id=<?= $r['cart_id'] ?>"><i class="fas fa-edit"></i></a></td>
                         <?php endif; ?>
                     </tr>

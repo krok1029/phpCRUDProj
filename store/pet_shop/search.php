@@ -32,7 +32,7 @@ if(isset($_POST['search'])){
         while($row = $query->fetch()){
             $goods_name = $row['name'];
             // $category_sid_name = $row['category_sid'];
-            $sid = $row['sid'];
+            $goods_id = $row['goods_id'];
 
             $output .= '<div>' .$goods_name.'</div>';
         }
