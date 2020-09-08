@@ -55,7 +55,7 @@ if(! isset($page_name)) $page_name='';
                     <a class="nav-link" href="./homepage/homepage/pet_info/data-list.php">首頁</a>
                 </li>
                 <li class="nav-item <?= $page_name=='data_insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="./menbership/index.php">會員</a>
+                    <a class="nav-link" href="./menbership/member_center/member_list.php">會員</a>
                 </li>
                 <li class="nav-item <?= $page_name=='data_insert' ? 'active' : '' ?>">
                     <a class="nav-link" href="./store/pet_shop/data_list.php">商城</a>
