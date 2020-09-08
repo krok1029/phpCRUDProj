@@ -3,7 +3,8 @@ if (!isset($page_name)) $page_name = '';
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="http://localhost/phpCRUDProj/">寵物後台 -</a>
+        <a class="navbar-brand" href="#">寵物領養</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -15,9 +16,6 @@ if (!isset($page_name)) $page_name = '';
                 </li>
                 <li class="nav-item <?= $page_name == 'data-insert' ? 'active' : '' ?>">
                     <a class="nav-link" href="<?= WEB_ROOT ?>/data-insert.php">新增</a>
-                </li>
-                <li class="nav-item <?= $page_name == 'data-list2' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= WEB_ROOT ?>/data-list2.php">列表2(ajax)</a>
                 </li>
             </ul>
             <ul class="navbar-nav">

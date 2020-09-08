@@ -86,20 +86,22 @@ if ($totalRows > 0) {
             <tbody>
                 <?php foreach ($rows as $r) : ?>
                     <tr>
-                        <?php if (isset($_SESSION['admin1'])) : ?>
-                            <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
+                        <?php if (empty($r['is_buy'])) : ?>
+                            <?php if (isset($_SESSION['admin1'])) : ?>
+                                <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </td>
 
-                        <?php endif; ?>
-                        <td><?= $r['name'] ?></td>
-                        <td><?= $r['price'] ?></td>
-                        <td><?= $r['quantity'] ?></td>
-                        <td><?= $r['price'] * $r['quantity'] ?></td>
-                        <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
-                        <?php if (isset($_SESSION['admin1'])) : ?>
-                            <td><a href="data_edit_test.php?cart_id=<?= $r['cart_id'] ?>"><i class="fas fa-edit"></i></a></td>
+                            <?php endif; ?>
+                            <td><?= $r['name'] ?></td>
+                            <td><?= $r['price'] ?></td>
+                            <td><?= $r['quantity'] ?></td>
+                            <td><?= $r['price'] * $r['quantity'] ?></td>
+                            <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
+                            <?php if (isset($_SESSION['admin1'])) : ?>
+                                <td><a href="data_edit_test.php?cart_id=<?= $r['cart_id'] ?>"><i class="fas fa-edit"></i></a></td>
+                            <?php endif; ?>
                         <?php endif; ?>
                     </tr>
 
@@ -108,7 +110,9 @@ if ($totalRows > 0) {
         </table>
         <div>
             <h1>total:<?= $totalPrice ?></h1>
-            <a class="btn btn-primary" href="order_insert.php" role="button">Submit</a>
+            <?php if ($totalPrice != 0) : ?>
+                <a class="btn btn-primary" href="order_insert.php" role="button">Submit</a>
+            <?php endif; ?>
         </div>
     </div>
 

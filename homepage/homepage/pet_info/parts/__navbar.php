@@ -23,12 +23,12 @@ if (!isset($page_name)) $page_name = '';
                         <a class="nav-link"><?= $_SESSION['admin1']['nickname'] ?></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= WEB_ROOT ?>/logout.php">登出</a>
+                        <a class="nav-link" href="<?= WEB_ROOT ?>/pet_info/logout.php">登出</a>
                     </li>
 
                 <?php else : ?>
                     <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?>">
-                        <a class="nav-link" href="<?= WEB_ROOT ?>/login.php">登入</a>
+                        <a class="nav-link" href="<?= WEB_ROOT ?>/pet_info/login.php">登入</a>
                     </li>
                 <?php endif; ?>
 

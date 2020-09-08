@@ -8,7 +8,7 @@ require __DIR__ . '/parts/__admin_required.php';
 
 
 
-$h_sql = "SELECT * FROM `tag_list`";
+$h_sql = "SELECT * FROM `tag_list_g`";
 $tag = $pdo->query($h_sql)->fetchAll();
 ?>
 <?php require __DIR__ . '/parts/__html_head.php'; ?>

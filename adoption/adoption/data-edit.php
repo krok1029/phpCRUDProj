@@ -9,7 +9,7 @@ if (empty($pet_id)) {
     exit;
 }
 
-$sql = " SELECT * FROM pet_info_master WHERE pet_id=$pet_id";
+$sql = " SELECT * FROM pet_info_master_g WHERE pet_id=$pet_id";
 $row = $pdo->query($sql)->fetch();
 if (empty($row)) {
     header('Location: data-list.php');
@@ -18,10 +18,10 @@ if (empty($row)) {
 
 
 
-$sql = "SELECT * FROM `tag_list`";
+$sql = "SELECT * FROM `tag_list_g`";
 $tag = $pdo->query($sql)->fetchAll();
 
-$sql = "SELECT tag_id FROM `pet_info_detail` where pet_id=$pet_id";
+$sql = "SELECT tag_id FROM `pet_info_detail_g` where pet_id=$pet_id";
 $tagCheck = $pdo->query($sql)->fetchAll();
 
 $tagList = [];

@@ -67,7 +67,7 @@ if(! isset($page_name)) $page_name='';
                     <a class="nav-link" href="./social_media/index.php">社群</a>
                 </li>
                 <li class="nav-item <?= $page_name=='data_insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="./adoption/index.php">動物領養</a>
+                    <a class="nav-link" href="./adoption/adoption/data-list.php">動物領養</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
