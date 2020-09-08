@@ -55,7 +55,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
                         </div>
                         <div class="form-group">
                             <label for="ptype_sid">分類</label>
-                            <select class="form-control" id="ptype_sid" name="ptype_sid" >
+                            <select class="form-control" id="ptype_sid" name="ptype_sid">
                                 <?php foreach ($ptype as $p) : ?>
                                     <option value="<?= $p['sid'] ?>"><?= $p['type'] ?></option>
                                 <?php endforeach ?>
@@ -78,12 +78,14 @@ $issue = $pdo->query($issue_sql)->fetchAll();
 
                         </div>
                         <div class="form-group">
-                            <label for="picture">picture</label>
-                            <input type="text" class="form-control" id="picture" name="picture" value="<?= htmlentities($row['picture']) ?>">
-                        </div>
+                            <button type="button" class="btn btn-warning" onclick="file_input.click()">更換圖片</button>
+                            <input type="hidden" id="picture" name="picture">
+                            <img src="./uploads/<?= $row['picture'] ?>" alt="" id="myimg" width="250px">
+                            <br> </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>
+                    <input type="file" id="file_input" style="display: none">
                 </div>
             </div>
         </div>
@@ -97,6 +99,24 @@ $issue = $pdo->query($issue_sql)->fetchAll();
     const r_fields = [$title, $content];
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
+    const file_input = document.querySelector('#file_input');
+    const picture = document.querySelector('#picture');
+
+    file_input.addEventListener('change', function(event) {
+        console.log(file_input.files)
+        const fd = new FormData();
+        fd.append('myfile', file_input.files[0]);
+
+        fetch('upload-single-api.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(obj => {
+                picture.value = obj.filename;
+                document.querySelector('#myimg').src = './uploads/' + obj.filename;
+            });
+    });
 
     function checkForm() {
         let isPass = true;

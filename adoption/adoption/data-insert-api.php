@@ -25,7 +25,7 @@ if (mb_strlen($_POST['name']) < 2) {
 
 
 // INSERT INTO `pet_info_master`(`pet_id`, `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`) 
-$sql = "INSERT INTO `pet_info_master`(
+$sql = "INSERT INTO `pet_info_master_g`(
  `name`, `dog_cat`, `age`, `area`, `address`, `description`, `create_time`
  ) VALUES (?, ?, ?, ?, ?, ?, NOW())";
 
@@ -41,7 +41,7 @@ $stmt->execute([
 
 ///////// handle tags
 if (count($_POST['tags']) > 0) {
-    $sql = "select pet_id from pet_info_master where name = ? and dog_cat = ? and age = ? and area = ? and address = ? and description = ?";
+    $sql = "select pet_id from pet_info_master_g where name = ? and dog_cat = ? and age = ? and area = ? and address = ? and description = ?";
 
     $stmt = $pdo->prepare($sql);
     $stmt->execute([
@@ -55,7 +55,7 @@ if (count($_POST['tags']) > 0) {
     $pet_id = $stmt->fetch(PDO::FETCH_NUM)[0];
 
 
-    $sql = "insert into pet_info_detail(pet_id,tag_id) values";
+    $sql = "insert into pet_info_detail_g(pet_id,tag_id) values";
     $sql2 = "";
 
     for ($i = 0; $i < count($_POST['tags']); $i++) {

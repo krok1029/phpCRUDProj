@@ -1,5 +1,4 @@
 <?php
-
 $db_host = "192.168.27.115";
 //$db_host = "192.168.27.82";
 //$db_host = "localhost";

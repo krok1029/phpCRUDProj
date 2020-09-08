@@ -7,12 +7,12 @@ $perPage = 5; // 每頁有幾筆資料
 
 $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
-$t_sql = "SELECT COUNT(1) FROM `pet_info_master`";
+$t_sql = "SELECT COUNT(1) FROM `pet_info_master_g`";
 
 if (isset($_GET['like'])) {
     $like = $_GET['like'];
     $t_sql = "SELECT count(1) 
-    FROM `pet_info_master` a left join pet_info_detail b on a.pet_id = b.pet_id left join tag_list c on b.tag_id = c.tag_id 
+    FROM `pet_info_master_g` a left join pet_info_detail_g b on a.pet_id = b.pet_id left join tag_list_g c on b.tag_id = c.tag_id 
     WHERE a.name like '%$like%' or a.area like'%$like%' or a.address like '%$like%' or a.description like '%$like%' or c.description like '%$like%' or  a.dog_cat like '%$like%'
     GROUP by a.`pet_id`, a.`name`, a.`dog_cat`, a.`age`, a.`area`, a.`address`, a.`description`, a.`create_time`";
     $totalRows = $pdo->query($t_sql)->rowCount();
@@ -36,12 +36,12 @@ if ($totalRows > 0) {
         exit;
     };
 
-    $sql = sprintf("SELECT * FROM `pet_info_master` ORDER BY pet_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
+    $sql = sprintf("SELECT * FROM `pet_info_master_g` ORDER BY pet_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $like = '';
     if (isset($_GET['like'])) {
         $like = $_GET['like'];
         $tsql = "SELECT a.`pet_id`, a.`name`, a.`dog_cat`, a.`age`, a.`area`, a.`address`, a.`description`, a.`create_time` 
-        FROM `pet_info_master` a left join pet_info_detail b on a.pet_id = b.pet_id left join tag_list c on b.tag_id = c.tag_id 
+        FROM `pet_info_master_g` a left join pet_info_detail_g b on a.pet_id = b.pet_id left join tag_list_g c on b.tag_id = c.tag_id 
         WHERE a.name like '%$like%' or a.area like'%$like%' or a.address like '%$like%' or a.description like '%$like%' or c.description like '%$like%' or  a.dog_cat like '%$like%'
         GROUP by a.`pet_id`, a.`name`, a.`dog_cat`, a.`age`, a.`area`, a.`address`, a.`description`, a.`create_time`";
         $sql = sprintf("ORDER BY a.pet_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
@@ -107,7 +107,7 @@ if ($totalRows > 0) {
         <!-- `sid`, `name`, `email`, `mobile`, `birthday`, `address`, `created_at` -->
         <thead>
             <tr>
-                <?php if (!isset($_SESSION['admin1'])) : ?>
+                <?php if (isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
                 <?php endif; ?>
@@ -120,7 +120,7 @@ if ($totalRows > 0) {
                 <th scope="col">地址</th>
                 <th scope="col">介紹</th>
                 <th scope="col">建立時間</th>
-                <?php if (!isset($_SESSION['admin1'])) : ?>
+                <?php if (isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
                 <!-- <th scope="col"><i class="fas fa-heart"></i></th> -->
@@ -131,7 +131,7 @@ if ($totalRows > 0) {
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <?php if (!isset($_SESSION['admin1'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data-delete.php?pet_id=<?= $r['pet_id'] ?>" onclick="ifDel(event)" data-sid="<?= $r['pet_id'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
@@ -140,7 +140,7 @@ if ($totalRows > 0) {
                     <td><?= $r['pet_id'] ?></td>
                     <?php
                     $sql = sprintf("SELECT b.tag_id , b.description
-                            FROM `pet_info_detail` a join tag_list b  on a.tag_id = b.tag_id
+                            FROM `pet_info_detail_g` a join tag_list_g b  on a.tag_id = b.tag_id
                             where  pet_id = %s ", $r['pet_id']);
                     $stmtd = $pdo->query($sql);
                     $rowsd = $stmtd->fetchAll();
@@ -148,7 +148,7 @@ if ($totalRows > 0) {
                     for ($i = 0; $i < count($rowsd); $i++) {
                         $tagStr = $tagStr . $rowsd[$i]['description'] . ',';
                     }
-                    // }
+                    
 
                     ?>
                     <td data-toggle="popover" data-trigger="hover" data-placement="bottom" data-content="<?= $tagStr ?>" style="cursor:pointer"><?= $r['name'] ?></td>
@@ -159,7 +159,7 @@ if ($totalRows > 0) {
                     <td><?= $r['description'] ?></td>
                     <td><?= $r['create_time'] ?></td>
 
-                    <?php if (!isset($_SESSION['admin1'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data-edit.php?pet_id=<?= $r['pet_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
                     <!-- <td><a href="#"><i class="fas fa-heart"></i></i></a></td> -->

@@ -14,9 +14,9 @@ $output = [
 // email_pattern = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 // mobile_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
 
-if(empty($_POST['sid'])){
+if(empty($_POST['goods_id'])){
     $output['code'] = 405;
-    $output['error'] = '沒有 sid';
+    $output['error'] = '沒有 goods_id';
     echo json_encode($output, JSON_UNESCAPED_UNICODE);
     exit;
 }
@@ -37,7 +37,7 @@ $sql = "UPDATE `shop_goods` SET
     `pricing`=?,
     `price`=?,
     `shelf_status` =?
-    WHERE `sid`=?";
+    WHERE `goods_id`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
@@ -47,7 +47,7 @@ $stmt->execute([
         $_POST['pricing'],
         $_POST['price'],
         $_POST['shelf_status'],
-        $_POST['sid']
+        $_POST['goods_id']
 ]);
 
 if($stmt->rowCount()){

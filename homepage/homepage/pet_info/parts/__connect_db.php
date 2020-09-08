@@ -1,10 +1,13 @@
 <?php
-
+$db_host = "192.168.27.115";
 //$db_host = "192.168.27.82";
-$db_host = "localhost";
-$db_name = "test";
-$db_user = "Wayne";
-$db_pass = "tsun227";
+// $db_host = "localhost";
+// $db_name = "test";
+// $db_user = "Wayne";
+// $db_pass = "tsun227";
+$db_name = "pet_adoption_proj";
+$db_user = "root";
+$db_pass = "";
 
 $dsn = "mysql:host={$db_host};dbname={$db_name}";
 

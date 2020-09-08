@@ -68,12 +68,12 @@ if ($totalRows > 0) {
                     <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
                 <?php endif; ?>
-                <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                <!-- <th scope="col"><i class="fas fa-trash-alt"></i></th> -->
                 <th scope="col">會員</th>
                 <th scope="col">狗/貓</th>
                 <th scope="col">年齡</th>
                 <th scope="col">地區</th>
-                <?php if (isset($_SESSION['admin'])) : ?>
+                <?php if (isset($_SESSION['admin1'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
 
@@ -84,7 +84,7 @@ if ($totalRows > 0) {
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <?php if (!isset($_SESSION['admin1'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
                                 <i class="fas fa-trash-alt"></i>
                             </a>
@@ -95,7 +95,7 @@ if ($totalRows > 0) {
                     <td><?= $r['age'] ?></td>
                     <td><?= $r['area'] ?></td>
 
-                    <?php if (isset($_SESSION['admin'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <td><a href="data-edit.php?user_id=<?= $r['user_id'] ?>"><i class="fas fa-edit"></i></a></td>
                     <?php endif; ?>
 

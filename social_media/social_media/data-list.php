@@ -85,29 +85,33 @@ if ($totalRows > 0) {
             </thead>
             <tbody>
                 <div class="row">
-
+                    <?php foreach ($rows as $r) : ?>
+                        <tr>
+                            <td>
+                                <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                            </td>
+                            <td><?= $r['sid'] ?></td>
+                            <td>
+                                <img src="./uploads/<?= $r['picture'] ?>" alt="" width="150px">
+                            </td>
+                            <td><?= $r['created_at'] ?></td>
+                            <td><?= $r['Last_updated'] ?></td>
+                            <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
+                            <td><?= $r['type_sid'] ?></td>
+                            <td><?= $r['issue_sid'] ?></td>
+                            <td><?= strip_tags($r['content']) ?></td>
+                            <td><?= $r['clicks'] ?></td>
+                        </tr>
+                    <?php endforeach; ?>
                 </div>
-                <?php foreach ($rows as $r) : ?>
-                    <tr>
-                        <td>
-                            <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
-                                <i class="fas fa-trash-alt"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a href="data-edit.php?sid=<?= $r['sid'] ?>">
-                                <i class="fas fa-edit"></i>
-                            </a>
-                        </td>
-                        <td><?= $r['sid'] ?></td>
-                        <td><?= $r['picture'] ?></td>
-                        <td><?= $r['created_at'] ?></td>
-                        <td><?= $r['Last_updated'] ?></td>
-                        <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
-                        <td style=""><?= strip_tags($r['content']) ?></td>
-                        <td><?= $r['clicks'] ?></td>
-                    </tr>
-                <?php endforeach; ?>
+
 
             </tbody>
         </table>
