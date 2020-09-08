@@ -27,6 +27,11 @@ if ($totalRows > 0) {
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll();
 }
+
+$row = [];
+$sql = " SELECT * FROM `cart_list_01` ORDER BY cart_id";
+$row = $pdo->query($sql)->fetch();
+
 # 正規表示式
 // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
 ?>
@@ -122,7 +127,7 @@ if ($totalRows > 0) {
 
                     <?php if (isset($_SESSION['admin'])) : ?>
                         <td>
-                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
+                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>&shelf_status=<?= $r['shelf_status'] ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a></td>
                     <?php endif; ?>
@@ -131,6 +136,30 @@ if ($totalRows > 0) {
                 </tr>
 
             <?php endforeach; ?>
+        </tbody>
+    </table>
+    <table class="table table-striped">
+        <!-- `cart_id`, `name`, `price`, `quantity` -->
+        <thead>
+            <tr>
+                <th scope="col" style="">cart_id</th>
+                <th scope="col" style="">goods_id</th>
+                <th scope="col">數量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($row as $s) : ?>
+                <?php if (empty($s['is_buy'])) : ?>
+                    <tr>
+                        <td style=""> <?= $s['cart_id'] ?></td>
+                        <td style=""><?= $s['goods_id'] ?></td>
+                        <td><?= $s['quantity'] ?></td>
+                    </tr>
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <input type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
+            <!--變字串-->
+            <?php implode(", ", $cartIdArray)  ?>
         </tbody>
     </table>
 

@@ -88,7 +88,7 @@ if ($totalRows > 0) {
                     <tr>
                         <?php if (empty($r['is_buy'])) : ?>
                             <?php if (isset($_SESSION['admin'])) : ?>
-                                <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
+                                <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>" data-name="<?= $r['name'] ?>">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
                                 </td>
@@ -126,7 +126,8 @@ if ($totalRows > 0) {
         const a = event.currentTarget;
         console.log(event.target, event.currentTarget);
         const cart_id = a.getAttribute('data-cart_id');
-        if (!confirm(`是否要刪除 ${name} ?`)) {
+        const name = a.getAttribute('data-name');
+        if (!confirm(`是否要刪除 ${cart_id}-${name} ?`)) {
             event.preventDefault(); // 取消連往 href 的設定
         }
     }
