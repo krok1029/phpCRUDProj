@@ -206,7 +206,7 @@ if (isset($_POST['search'])) {
                     <!-- 下為購物車 -->
                     <?php if (isset($_SESSION['admin1'])) : ?>
                         <td>
-                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>">
+                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>&shelf_status=<?= $r['shelf_status'] ?>">
                                 <i class="fas fa-shopping-cart"></i>
                             </a></td>
                     <?php endif; ?>

@@ -98,7 +98,6 @@ if(! isset($page_name)) $page_name='';
 
 <div class="container">
     <h2>Hello~</h2>
-
 </div>
 
 <script src="<?= WEB_ROOT ?>/lib/jquery-3.5.1.min.js"></script>
