@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/__connect_db.php';
+require __DIR__ . '/parts/__connect_db.php';
 
 header('Content-Type: application/json');
 
@@ -34,7 +34,7 @@ $sql = "INSERT INTO `order_list_01`(
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
-    $_POST['admins_id'],
+    $_POST['pet_shop_admins_id'],
     $_POST['total_price'],
     $_POST['nickname'],
     $_POST['address'],

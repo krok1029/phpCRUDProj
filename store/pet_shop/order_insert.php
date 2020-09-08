@@ -1,7 +1,7 @@
 <?php
 $page_title = '資料列表';
 $page_name = 'order_insert';
-require __DIR__ . '/__connect_db.php';
+require __DIR__ . '/parts/__connect_db.php';
 
 $perPage = 1000; // 每頁有幾筆資料
 
@@ -36,7 +36,7 @@ $sql = " SELECT * FROM `order_list_01` ORDER BY order_id";
 $array = $pdo->query($sql)->fetch();
 
 $row = [];
-$sql = " SELECT * FROM `pet_shop_admins` ORDER BY admins_id";
+$sql = " SELECT * FROM `pet_shop_admins` ORDER BY pet_shop_admins_id";
 $row = $pdo->query($sql)->fetch();
 
 
@@ -44,8 +44,8 @@ $cartIdArray = [];
 
 ?>
 
-<?php require __DIR__ . '/__html_head.php'; ?>
-<?php include __DIR__ . '/__navbar.php'; ?>
+<?php require __DIR__ . '/parts/__html_head.php'; ?>
+<?php include __DIR__ . '/parts/__navbar.php'; ?>
 
 <style>
     span.red-stars {
@@ -101,7 +101,7 @@ $cartIdArray = [];
 
 
 
-                            <input type="hidden" name="admins_id" value="<?= $row['admins_id'] ?>">
+                            <input type="hidden" name="pet_shop_admins_id" value="<?= $row['pet_shop_admins_id'] ?>">
 
                             <div class="form-group">
                                 <label for="nickname"><span class="red-stars">**</span> 收件人名稱</label>
@@ -172,7 +172,7 @@ $cartIdArray = [];
     </div>
 </form>
 
-<?php include __DIR__ . '/__scripts.php'; ?>
+<?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
     const cellphone_pattern = /^09\d{2}-?\d{3}-?\d{3}$/;
     const $nickname = document.querySelector('#nickname');
@@ -223,7 +223,7 @@ $cartIdArray = [];
                         infobar.className = "alert alert-success";
 
                         setTimeout(() => {
-                            location.href = 'data-list.php';
+                            location.href = 'data_list.php';
                         }, 3000)
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
@@ -239,4 +239,4 @@ $cartIdArray = [];
         }
     }
 </script>
-<?php include __DIR__ . '/__html_foot.php'; ?>
+<?php include __DIR__ . '/parts/__html_foot.php'; ?>

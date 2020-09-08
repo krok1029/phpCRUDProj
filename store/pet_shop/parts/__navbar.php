@@ -12,12 +12,14 @@ if (!isset($page_name)) $page_name = '';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item <?= $page_name == 'data_list' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= WEB_ROOT ?>/data_list.php">列表</a>
+                    <a class="nav-link" href="<?= WEB_ROOT ?>/data_list.php">商品列表</a>
                 </li>
                 <li class="nav-item <?= $page_name == 'data_insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= WEB_ROOT ?>/data_insert.php">新增</a>
+                    <a class="nav-link" href="<?= WEB_ROOT ?>/data_insert.php">商品新增</a>
                 </li>
-
+                <li class="nav-item <?= $page_name == 'data_list_test' ? 'active' : '' ?>">
+                    <a class="nav-link" href="./data_list_test.php">購物車列表</a>
+                </li>
             </ul>
             <ul class="navbar-nav">
                 <?php if (isset($_SESSION['admin1'])) : ?>

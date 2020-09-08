@@ -1,7 +1,7 @@
 <?php
 $page_title = '資料列表';
 $page_name = 'data_list_test';
-require __DIR__ . '/__connect_db.php';
+require __DIR__ . '/parts/__connect_db.php';
 
 $perPage = 1000; // 每頁有幾筆資料
 
@@ -33,8 +33,8 @@ if ($totalRows > 0) {
 # 正規表示式
 // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
 ?>
-<?php require __DIR__ . '/__html_head.php'; ?>
-<?php include __DIR__ . '/__navbar.php'; ?>
+<?php require __DIR__ . '/parts/__html_head.php'; ?>
+<?php include __DIR__ . '/parts/__navbar.php'; ?>
 
 <form name="form1" onsubmit="checkForm(); return false;" novalidate>
     <div class="container">
@@ -70,7 +70,7 @@ if ($totalRows > 0) {
             <!-- `cart_id`, `name`, `price`, `quantity` -->
             <thead>
                 <tr>
-                    <?php if (isset($_SESSION['admin'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <?php endif; ?>
                     <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
@@ -78,7 +78,7 @@ if ($totalRows > 0) {
                     <th scope="col">價格</th>
                     <th scope="col">數量</th>
                     <th scope="col">小計</th>
-                    <?php if (isset($_SESSION['admin'])) : ?>
+                    <?php if (isset($_SESSION['admin1'])) : ?>
                         <th scope="col"><i class="fas fa-edit"></i></th>
                     <?php endif; ?>
                 </tr>
@@ -86,23 +86,20 @@ if ($totalRows > 0) {
             <tbody>
                 <?php foreach ($rows as $r) : ?>
                     <tr>
-                        <?php if (empty($r['is_buy'])) : ?>
-                            <?php if (isset($_SESSION['admin'])) : ?>
-                                <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </a>
-                                </td>
-                            <?php endif; ?>
+                        <?php if (isset($_SESSION['admin1'])) : ?>
+                            <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>">
+                                    <i class="fas fa-trash-alt"></i>
+                                </a>
+                            </td>
 
-                            <td><?= $r['name'] ?></td>
-                            <td><?= $r['price'] ?></td>
-                            <td><?= $r['quantity'] ?></td>
-                            <td><?= $r['price'] * $r['quantity'] ?></td>
-                            <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
-
-                            <?php if (isset($_SESSION['admin'])) : ?>
-                                <td><a href="data_edit_test.php?cart_id=<?= $r['cart_id'] ?>"><i class="fas fa-edit"></i></a></td>
-                            <?php endif; ?>
+                        <?php endif; ?>
+                        <td><?= $r['name'] ?></td>
+                        <td><?= $r['price'] ?></td>
+                        <td><?= $r['quantity'] ?></td>
+                        <td><?= $r['price'] * $r['quantity'] ?></td>
+                        <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
+                        <?php if (isset($_SESSION['admin1'])) : ?>
+                            <td><a href="data_edit_test.php?cart_id=<?= $r['cart_id'] ?>"><i class="fas fa-edit"></i></a></td>
                         <?php endif; ?>
                     </tr>
 
@@ -111,16 +108,14 @@ if ($totalRows > 0) {
         </table>
         <div>
             <h1>total:<?= $totalPrice ?></h1>
-            <?php if ($totalPrice != 0) : ?>
-                <a class="btn btn-primary" href="order_insert.php" role="button">Submit</a>
-            <?php endif; ?>
+            <a class="btn btn-primary" href="order_insert.php" role="button">Submit</a>
         </div>
     </div>
 
 
 </form>
 
-<?php include __DIR__ . '/__scripts.php'; ?>
+<?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
     function ifDel(event) {
         const a = event.currentTarget;
@@ -131,4 +126,4 @@ if ($totalRows > 0) {
         }
     }
 </script>
-<?php include __DIR__ . '/__html_foot.php'; ?>
+<?php include __DIR__ . '/parts/__html_foot.php'; ?>
