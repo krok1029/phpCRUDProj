@@ -12,10 +12,10 @@ if (!isset($page_name)) $page_name = '';
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item <?= $page_name == 'data-list' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= WEB_ROOT ?>/data-list.php">列表</a>
+                    <a class="nav-link" href="<?= WEB_ROOT ?>/data-list.php">寵物列表</a>
                 </li>
                 <li class="nav-item <?= $page_name == 'data-insert' ? 'active' : '' ?>">
-                    <a class="nav-link" href="<?= WEB_ROOT ?>/data-insert.php">新增</a>
+                    <a class="nav-link" href="<?= WEB_ROOT ?>/data-insert.php">寵物新增</a>
                 </li>
             </ul>
             <ul class="navbar-nav">
