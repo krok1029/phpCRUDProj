@@ -2,6 +2,7 @@
 $page_title = '編輯資料';
 $page_name = 'data-edit';
 require __DIR__ . './parts/__connect_db.php';
+require __DIR__ . './parts/__admin_required.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 if (empty($sid)) {
@@ -101,6 +102,9 @@ $issue = $pdo->query($issue_sql)->fetchAll();
     const submitBtn = document.querySelector('button[type=submit]');
     const file_input = document.querySelector('#file_input');
     const picture = document.querySelector('#picture');
+    const $issue_sid = document.querySelector('#issue_sid')
+    const $ptype_sid = document.querySelector('#ptype_sid')
+    const r_allitems = [$title, $content, picture, $issue_sid, $ptype_sid];
 
     file_input.addEventListener('change', function(event) {
         console.log(file_input.files)
@@ -137,6 +141,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
             $content.style.borderColor = 'red';
             $content.nextElementSibling.innerHTML = '內容至少15字';
         }
+
 
         if (isPass) {
             const fd = new FormData(document.form1);

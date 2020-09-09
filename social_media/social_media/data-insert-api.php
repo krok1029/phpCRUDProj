@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . './parts/__connect_db.php';
+require __DIR__ . './parts/__admin_required.php';
+
 
 header('Content-Type: application/json');
 
@@ -29,8 +31,8 @@ if (mb_strlen($_POST['content']) < 15) {
 }
 
 
-$sql = "INSERT INTO `forum_article`(`type_sid`, `issue_sid`, `title`, `content`, `picture`, `created_at`)
-VALUES (?,?,?,?,?,NOW())";
+$sql = "INSERT INTO `forum_article`(`type_sid`, `issue_sid`, `title`, `content`, `picture`, `created_at`,`clicks`)
+VALUES (?,?,?,?,?,NOW(),0)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
@@ -38,7 +40,7 @@ $stmt->execute([
     $_POST['issue_sid'],
     $_POST['title'],
     $_POST['content'],
-    $_POST['picture']
+    $_POST['picture'],
 ]);
 
 // echo $stmt->rowCount();

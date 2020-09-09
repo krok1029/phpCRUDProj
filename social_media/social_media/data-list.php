@@ -44,6 +44,9 @@ if ($totalRows > 0) {
     th {
         white-space: nowrap;
     }
+    .member_text{
+        color:darkcyan;
+    }
 </style>
 <?php require __DIR__ . './parts/__navbar.php'; ?>
 <div class="container">
@@ -78,8 +81,10 @@ if ($totalRows > 0) {
     <table class="table table-striped">
         <thead>
             <tr>
-                <th scope="col"><i class="fas fa-trash-alt"></i></th>
-                <th scope="col"><i class="fas fa-edit"></i></th>
+                <?php if (isset($_SESSION['admin'])) : ?>
+                    <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                    <th scope="col"><i class="fas fa-edit"></i></th>
+                <?php endif; ?>
                 <th scope="col">#</th>
                 <th scope="col">作者</th>
                 <th scope="col">圖片</th>
@@ -95,20 +100,26 @@ if ($totalRows > 0) {
         <tbody>
             <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <td>
-                        <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
-                            <i class="fas fa-trash-alt"></i>
-                        </a>
-                    </td>
-                    <td>
-                        <a href="data-edit.php?sid=<?= $r['sid'] ?>">
-                            <i class="fas fa-edit"></i>
-                        </a>
-                    </td>
+                    <?php if (isset($_SESSION['admin'])) : ?>
+                        <td>
+                            <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                                <i class="fas fa-trash-alt"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                                <i class="fas fa-edit"></i>
+                            </a>
+                        </td>
+                    <?php endif; ?>
                     <td><?= $r['sid'] ?></td>
-                    <td></td>
+                    <td class="member_text" style="overflow:hidden;white-space:nowrap">
+                        <?php foreach ($member1 as $m) : ?>
+                            <?= ($m['sid'] == $r['member_sid']) ? $m['name'] : '' ?>
+                        <?php endforeach; ?>
+                    </td>
                     <td>
-                        <img src="./uploads/<?= $r['picture'] ?>" alt="" width="150px">
+                        <img src="./uploads/<?= $r['picture'] ?>" onerror="javascript:this.src='./uploads/pets.png'" alt="" width="150px">
                     </td>
                     <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
                     <td style="overflow:hidden;white-space:nowrap">

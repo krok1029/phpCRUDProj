@@ -7,4 +7,4 @@ unset($_SESSION['admin']);
 
 # session_destroy(); // 清掉所有 session 資料
 
-header('Location: member_list.php'); // redirect // 轉向
+header('Location: WEB_ROOT2/../../../'); // redirect // 轉向

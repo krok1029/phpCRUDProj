@@ -2,6 +2,7 @@
 $page_title = '新增資料';
 $page_name = 'data-insert';
 require __DIR__ . './parts/__connect_db.php';
+require __DIR__ . './parts/__admin_required.php';
 
 $ptype_sql = "SELECT * FROM pet_type WHERE 1";
 $ptype = $pdo->query($ptype_sql)->fetchAll();
