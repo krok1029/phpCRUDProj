@@ -1,5 +1,7 @@
 <?php
 require __DIR__ . './parts/__connect_db.php';
+require __DIR__ . './parts/__admin_required.php';
+
 
 header('Content-Type: application/json');
 
@@ -36,15 +38,24 @@ if (mb_strlen($_POST['content']) < 15) {
 
 
 $sql = "UPDATE `forum_article` SET 
+`type_sid`=?,
+`issue_sid`=?,
 `title`=?,
 `content`=?,
-`picture`=?,
+`picture`=?
+WHERE `sid`=?";
+
+$sq2 = "UPDATE `forum_article` SET 
 `Last_updated`=NOW()
 WHERE `sid`=?";
 
 
 $stmt = $pdo->prepare($sql);
+$stmt2 = $pdo->prepare($sq2);
+
 $stmt->execute([
+    $_POST['ptype_sid'],
+    $_POST['issue_sid'],
     $_POST['title'],
     $_POST['content'],
     $_POST['picture'],
@@ -55,6 +66,9 @@ $stmt->execute([
 // echo 'ok';
 if ($stmt->rowCount()) {
     $output['success'] = true;
+    $stmt2->execute([
+        $_POST['sid'],
+    ]);
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

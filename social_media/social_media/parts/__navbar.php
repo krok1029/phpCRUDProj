@@ -3,7 +3,7 @@ if (!isset($page_name)) $page_name = '';
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-  <a class="navbar-brand" href="http://localhost/phpCRUDProj/">寵物後台 -</a>
+    <a class="navbar-brand" href="http://localhost/phpCRUDProj/">寵物後台 -</a>
     <a class="navbar-brand" href="#">寵物社群</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -18,6 +18,20 @@ if (!isset($page_name)) $page_name = '';
           <a class="nav-link" href="<?= WEB_ROOT2 ?>/data-insert.php">文章新增</a>
         </li>
 
+      </ul>
+      <ul class="navbar-nav">
+        <?php if (isset($_SESSION['admin'])) : ?>
+          <li class="nav-item">
+            <a class="nav-link"><?= $_SESSION['admin']['nickname'] ?></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?= WEB_ROOT2 ?>/logout.php">登出</a>
+          </li>
+        <?php else : ?>
+          <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?> ">
+            <a class="nav-link" href="<?= WEB_ROOT2 ?>/login.php">登入</a>
+          </li>
+        <?php endif; ?>
       </ul>
 
     </div>

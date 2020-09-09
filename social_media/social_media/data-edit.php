@@ -2,6 +2,7 @@
 $page_title = '編輯資料';
 $page_name = 'data-edit';
 require __DIR__ . './parts/__connect_db.php';
+require __DIR__ . './parts/__admin_required.php';
 
 $sid = isset($_GET['sid']) ? intval($_GET['sid']) : 0;
 if (empty($sid)) {
@@ -57,7 +58,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
                             <label for="ptype_sid">分類</label>
                             <select class="form-control" id="ptype_sid" name="ptype_sid">
                                 <?php foreach ($ptype as $p) : ?>
-                                    <option value="<?= $p['sid'] ?>"><?= $p['type'] ?></option>
+                                    <option value="<?= $p['sid'] ?>" <?= $row['type_sid'] == $p['sid'] ? 'selected' : '' ?>><?= $p['type'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -66,7 +67,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
                             <label for="issue_sid">主題</label>
                             <select class="form-control" id="issue_sid" name="issue_sid">
                                 <?php foreach ($issue as $i) : ?>
-                                    <option value="<?= $i['sid'] ?>"><?= $i['name'] ?></option>
+                                    <option value="<?= $i['sid'] ?>" <?= $row['issue_sid'] == $i['sid'] ? 'selected' : '' ?>><?= $i['name'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>
@@ -79,7 +80,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
                         </div>
                         <div class="form-group">
                             <button type="button" class="btn btn-warning" onclick="file_input.click()">更換圖片</button>
-                            <input type="hidden" id="picture" name="picture">
+                            <input type="hidden" id="picture" name="picture" value="<?= htmlentities($row['picture']) ?>">
                             <img src="./uploads/<?= $row['picture'] ?>" alt="" id="myimg" width="250px">
                             <br> </div>
 
@@ -101,6 +102,9 @@ $issue = $pdo->query($issue_sql)->fetchAll();
     const submitBtn = document.querySelector('button[type=submit]');
     const file_input = document.querySelector('#file_input');
     const picture = document.querySelector('#picture');
+    const $issue_sid = document.querySelector('#issue_sid')
+    const $ptype_sid = document.querySelector('#ptype_sid')
+    const r_allitems = [$title, $content, picture, $issue_sid, $ptype_sid];
 
     file_input.addEventListener('change', function(event) {
         console.log(file_input.files)
@@ -137,6 +141,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
             $content.style.borderColor = 'red';
             $content.nextElementSibling.innerHTML = '內容至少15字';
         }
+
 
         if (isPass) {
             const fd = new FormData(document.form1);
