@@ -108,10 +108,9 @@ if ($totalRows > 0) {
                                 <button class="btn btn-primary minus_quantity" data-goods_id2="<?= $r['goods_id'] ?>" data-quantity2="<?= $r['quantity'] ?>">
                                     -
                                 </button>
-
-
                             </td>
                             <td class="subtotal"></td>
+                            
                             <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
 
                             <?php if (isset($_SESSION['admin'])) : ?>
