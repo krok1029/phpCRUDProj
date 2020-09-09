@@ -28,10 +28,7 @@ if ($totalRows > 0) {
     $rows = $stmt->fetchAll();
 }
 
-// $alltotal = "SELECT SUM(total) FROM `cart_list_01`";
 
-# 正規表示式
-// https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
 ?>
 <?php require __DIR__ . '/__html_head.php'; ?>
 <?php include __DIR__ . '/__navbar.php'; ?>
@@ -73,7 +70,8 @@ if ($totalRows > 0) {
                     <?php if (isset($_SESSION['admin'])) : ?>
                         <th scope="col"><i class="fas fa-trash-alt"></i></th>
                     <?php endif; ?>
-                    <!-- <th scope="col"><i class="fas fa-user-times"></i></th> -->
+
+                    <th scope="col">check</th>
                     <th scope="col">商品</th>
                     <th scope="col">價格</th>
                     <th scope="col">數量</th>
@@ -93,11 +91,27 @@ if ($totalRows > 0) {
                                     </a>
                                 </td>
                             <?php endif; ?>
+                            <td><Input type="Checkbox" name="cart_id_check[]" value="<?= $r['cart_id'] ?>"></td>
 
+                            <input type="hidden" name="cart_id" value="<?= $r['cart_id'] ?>">
                             <td><?= $r['name'] ?></td>
                             <td><?= $r['price'] ?></td>
-                            <td><?= $r['quantity'] ?></td>
-                            <td><?= $r['price'] * $r['quantity'] ?></td>
+
+                            <td>
+                                <button class="btn btn-primary add_quantity" data-goods_id1="<?= $r['goods_id'] ?>" data-quantity1="<?= $r['quantity'] ?>">
+                                    +
+                                </button>
+                                <span style="display:inline-block;width:30px;text-align:center;">
+                                    <?= $r['quantity']  ?>
+                                </span>
+
+                                <button class="btn btn-primary minus_quantity" data-goods_id2="<?= $r['goods_id'] ?>" data-quantity2="<?= $r['quantity'] ?>">
+                                    -
+                                </button>
+
+
+                            </td>
+                            <td class="subtotal"></td>
                             <?php $totalPrice = $totalPrice + ($r['price'] * $r['quantity']) ?>
 
                             <?php if (isset($_SESSION['admin'])) : ?>
@@ -110,9 +124,9 @@ if ($totalRows > 0) {
             </tbody>
         </table>
         <div>
-            <h1>total:<?= $totalPrice ?></h1>
+            <h1 class="totalPrice">total:</h1>
             <?php if ($totalPrice != 0) : ?>
-                <a class="btn btn-primary" href="order_insert.php" role="button">Submit</a>
+                <button type="submit" class="btn btn-primary">buy</button>
             <?php endif; ?>
         </div>
     </div>
@@ -131,5 +145,123 @@ if ($totalRows > 0) {
             event.preventDefault(); // 取消連往 href 的設定
         }
     }
+
+    const submitBtn = document.querySelector('button[type=submit]');
+
+    function checkForm() {
+        let isPass = true;
+
+        submitBtn.style.display = 'none';
+        // TODO: 檢查資料格式
+
+        if (isPass) {
+            const fd = new FormData(document.form1);
+
+            fetch('data_list_api_test.php', {
+                    method: 'POST',
+                    body: fd
+                })
+                .then(r => r.json())
+                .then(obj => {
+                    console.log(obj);
+                    if (obj.success) {
+                        setTimeout(() => {
+                            location.href = 'order_insert.php';
+                        }, 1000)
+                    } else {
+
+                        submitBtn.style.display = 'block';
+                    }
+                });
+
+        } else {
+            submitBtn.style.display = 'block';
+        }
+    }
+
+    ///////////////////
+
+    $('.add_quantity').on('click', function(event) {
+        event.preventDefault();
+        console.log('add goods id:', $(this).data('goods_id1'));
+
+        let goods_id1 = $(this).data('goods_id1');
+        let quantity1 = $(this).data('quantity1');
+
+        console.log('add quantity:', quantity1);
+
+        fetch(`cart_update_add.php?goods_id=${goods_id1}&quantity=${quantity1}`, {
+                method: 'GET',
+            })
+            .then(() => {
+                let newAddQuantity = $(this).next().text() * 1 + 1;
+                $(this).next().text(newAddQuantity);
+                $(this).data('quantity1', newAddQuantity);
+                $(this).next().next().data('quantity2', newAddQuantity);
+                checkNumber();
+                console.log($(this).next().text());
+            });
+    });
+
+    ///////////
+
+    $('.minus_quantity').on('click', function(event) {
+        event.preventDefault();
+        console.log('minus goods id:', $(this).data('goods_id2'));
+
+        let goods_id2 = $(this).data('goods_id2');
+        let quantity2 = $(this).data('quantity2');
+
+        console.log('minus quantity:', quantity2);
+
+        fetch(`cart_update_minus.php?goods_id=${goods_id2}&quantity=${quantity2}`, {
+                method: 'GET',
+            })
+            .then(() => {
+                let newMinusQuantity = $(this).prev().text() * 1 - 1;
+                $(this).prev().text(newMinusQuantity);
+                $(this).data('quantity2', newMinusQuantity);
+                $(this).prev().prev().data('quantity1', newMinusQuantity);
+                checkNumber();
+                console.log($(this).next().text());
+            });
+    });
+
+    ///////////////////
+
+    $('input:checkbox').on('change', function() {
+        console.log($(this).prop('checked'));
+        checkNumber();
+    })
+
+    function checkNumber() {
+
+        $('.minus_quantity').each(function() {
+            if ($(this).data('quantity2') === 1) {
+                $(this).attr('disabled', true);
+            } else {
+                $(this).attr('disabled', false);
+            }
+        });
+
+        $('.subtotal').each(function() {
+            $(this).text($(this).prev().find('span').text() * $(this).prev().prev().text())
+        })
+        let total = 0;
+        submitBtn.style.display = 'none';
+        $('input:checkbox').each(function() {
+            if ($(this).prop('checked')) {
+                total += +$(this).parent().siblings().eq(5).text();
+                submitBtn.style.display = 'block';
+            }
+        })
+
+        $('.totalPrice').text(total)
+    }
+
+    $(document).ready(function() {
+        checkNumber();
+    })
+    ///
 </script>
 <?php include __DIR__ . '/__html_foot.php'; ?>

@@ -30,13 +30,23 @@ if ($totalRows > 0) {
 
 $row = [];
 $sql = " SELECT * FROM `cart_list_01` ORDER BY cart_id";
-$row = $pdo->query($sql)->fetch();
+$row = $pdo->query($sql)->fetchAll();
+
+foreach ($row as $data) {
+    $dataArray[$data['goods_id']] = $data['quantity'];
+}
+
+
+foreach ($row as $s);
+
+
 
 # 正規表示式
 // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
 ?>
 <?php require __DIR__ . '/__html_head.php'; ?>
 <?php include __DIR__ . '/__navbar.php'; ?>
+
 <div class="container">
     <div class="row">
         <div class="col d-flex justify-content-end">
@@ -127,9 +137,29 @@ $row = $pdo->query($sql)->fetch();
 
                     <?php if (isset($_SESSION['admin'])) : ?>
                         <td>
-                            <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>&shelf_status=<?= $r['shelf_status'] ?>">
+                            <?php if (!empty($r['shelf_status'])) : ?>
+                                <?php if (!empty($dataArray[$r['goods_id']])) : ?>
+                                    <?php if (!empty($row['is_buy'])) : ?>
+                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (empty($row['is_buy'])) : ?>
+                                        <a href="cart_update_api.php?goods_id=<?= $r['goods_id'] ?>&sale=<?= $r['sale'] ?>&cart_id=<?= $s['cart_id'] ?>&quantity=<?= $dataArray[$r['goods_id']] ?>">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if (empty($dataArray[$r['goods_id']])) : ?>
+                                    <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                            <?php if (empty($r['shelf_status'])) : ?>
                                 <i class="fas fa-shopping-cart"></i>
-                            </a></td>
+                            <?php endif; ?>
+                        </td>
                     <?php endif; ?>
 
 
@@ -142,24 +172,21 @@ $row = $pdo->query($sql)->fetch();
         <!-- `cart_id`, `name`, `price`, `quantity` -->
         <thead>
             <tr>
-                <th scope="col" style="">cart_id</th>
-                <th scope="col" style="">goods_id</th>
-                <th scope="col">數量</th>
+                <th scope="col" style="display: none;">cart_id</th>
+                <th scope="col" style="display: none;">goods_id</th>
+                <th scope="col" style="display: none;">數量</th>
             </tr>
         </thead>
         <tbody>
-            <?php foreach ($row as $s) : ?>
-                <?php if (empty($s['is_buy'])) : ?>
-                    <tr>
-                        <td style=""> <?= $s['cart_id'] ?></td>
-                        <td style=""><?= $s['goods_id'] ?></td>
-                        <td><?= $s['quantity'] ?></td>
-                    </tr>
-                <?php endif; ?>
-            <?php endforeach; ?>
-            <input type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
-            <!--變字串-->
-            <?php implode(", ", $cartIdArray)  ?>
+            <!-- <?php foreach ($row as $s) : ?> -->
+            <?php if (empty($s['is_buy'])) : ?>
+                <tr>
+                    <td style="display: none;"><?= $s['cart_id'] ?></td>
+                    <td style="display: none;"><?= $s['goods_id'] ?></td>
+                    <td style="display: none;"><?= $s['quantity'] ?></td>
+                </tr>
+            <?php endif; ?>
+            <!-- <?php endforeach; ?> -->
         </tbody>
     </table>
 
