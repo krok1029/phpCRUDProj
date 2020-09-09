@@ -53,12 +53,13 @@ if (empty($row)) {
                         <div class="form-group">
                             <label for="quantity"><span class="red-stars">**</span>quantity</label>
 
-                            <input type="text" pattern="[1-9]*" class="form-control" id="quantity" name="quantity" onkeyup="return ValidateNumber(this,value)" value="<?= htmlentities($row['quantity']) ?>">
+                            <input type="text" pattern="[1-9][0-9]*" class="form-control" id="quantity" name="quantity" onkeyup="return ValidateNumber(this,value)" value="<?= htmlentities($row['quantity']) ?>">
 
                             <script type="text/javascript">
                                 function ValidateNumber(e, pnumber) {
-                                    if (!/^[1-9]*$/.test(pnumber)) {
-                                        e.value = /^[1-9]*/.exec(e.value);
+                                    if (!/^([1-9][0-9]*)$/.test(pnumber)) {
+                                        e.value = /^([1-9][0-9]*)/.exec(e.value);
+                                        //[1-9]* ^[1-9]*$ ^[1-9]* 09\d{2}-?\d{3}-?\d{3}
                                     }
                                     return false;
                                 }

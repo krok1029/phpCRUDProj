@@ -21,6 +21,7 @@ if (!isset($page_name)) $page_name = '';
                     <a class="nav-link" href="./data_list_test.php">購物車列表</a>
                 </li>
             </ul>
+            <!-- 登入 -->
             <ul class="navbar-nav">
                 <?php if (isset($_SESSION['admin1'])) : ?>
                     <li class="nav-item">
@@ -35,8 +36,8 @@ if (!isset($page_name)) $page_name = '';
                         <a class="nav-link" href="<?= WEB_ROOT ?>/login.php">登入</a>
                     </li>
                 <?php endif; ?>
-
             </ul>
+            <!-- 登入結束 -->
         </div>
     </div>
 </nav>

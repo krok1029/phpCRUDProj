@@ -13,8 +13,8 @@ $output = [
 $account = isset($_POST['account']) ? $_POST['account'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-$sql = "SELECT `sid`, `account`, `nickname` 
-        FROM `admins` 
+$sql = "SELECT `pet_shop_admins_id`, `account`, `nickname` 
+        FROM `pet_shop_admins` 
         WHERE `account`=? AND `password`=SHA1(?)";
 
 $stmt = $pdo->prepare($sql);

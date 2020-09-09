@@ -37,6 +37,26 @@ if ($stmt->rowCount()) {
     $output['success'] = true;
 }
 
+///////////////////
+
+$sale = intval($_GET['sale']) ?? 0;
+$shelf_status = intval($_GET['shelf_status']) ?? 0;
+
+$sql = "UPDATE `shop_goods` SET `sale`=? WHERE `goods_id`=$goods_id";
+
+$stmt2 = $pdo->prepare($sql);
+
+$stmt2->execute([
+    $sale + 1,
+]);
+
+
+if ($stmt2->rowCount()) {
+    $output['success'] = true;
+}
+
+//////////////////
+
 echo json_encode($output, JSON_UNESCAPED_UNICODE);
 
 header('Location: ' . $referer);

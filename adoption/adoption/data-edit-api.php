@@ -30,7 +30,7 @@ if (mb_strlen($_POST['name']) < 2) {
 
 
 
-$sql = "UPDATE `pet_info_master` SET 
+$sql = "UPDATE `pet_info_master_g` SET 
     `name`=?,
     `dog_cat`=?,
     `age`=?,
@@ -53,10 +53,10 @@ $stmt->execute([
 if (count($_POST['tags']) > 0) {
     $pet_id = $_POST['pet_id'];
 
-    $pdo->query("DELETE FROM pet_info_detail WHERE pet_id=$pet_id ");
+    $pdo->query("DELETE FROM pet_info_detail_g WHERE pet_id=$pet_id ");
 
 
-    $sql = "insert into pet_info_detail(pet_id,tag_id) values";
+    $sql = "insert into pet_info_detail_g(pet_id,tag_id) values";
     $sql2 = "";
 
     for ($i = 0; $i < count($_POST['tags']); $i++) {
