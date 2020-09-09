@@ -18,6 +18,11 @@ if (!isset($page_name)) $page_name = '';
         </li>
 
       </ul>
+      <ul class="navbar-nav">
+        <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?> ">
+          <a class="nav-link" href="<?= WEB_ROOT2 ?>/social_media/social_media/login.php">登入</a>
+        </li>
+      </ul>
 
     </div>
   </div>

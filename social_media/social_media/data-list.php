@@ -13,6 +13,15 @@ $totalRows = $pdo->query($t_sql)->fetch(PDO::FETCH_NUM)[0];
 // die('~~~'); //exit; // 結束程式
 $totalPages = ceil($totalRows / $perPage);
 
+$ptype_sql = "SELECT * FROM pet_type WHERE 1";
+$ptype = $pdo->query($ptype_sql)->fetchAll();
+
+$issue_sql = "SELECT * FROM forum_issue WHERE 1";
+$issue = $pdo->query($issue_sql)->fetchAll();
+
+$member_sql = "SELECT * FROM `member_list` WHERE 1";
+$member1 = $pdo->query($member_sql)->fetchAll();
+
 $rows = [];
 if ($totalRows > 0) {
     if ($page < 1) {
@@ -32,15 +41,14 @@ if ($totalRows > 0) {
 
 <?php require __DIR__ . './parts/__html_head.php'; ?>
 <style>
-    td {
-        overflow: hidden;
-        text-overflow: ellipsis;
+    th {
+        white-space: nowrap;
     }
 </style>
 <?php require __DIR__ . './parts/__navbar.php'; ?>
 <div class="container">
     <div class="row">
-        <div class="col d-flex justify-content-end">
+        <div class="col d-flex justify-content-center">
             <nav aria-label="Page navigation example">
                 <ul class="pagination">
                     <li class="page-item <?= $page == 1 ? 'disabled' : '' ?>">
@@ -66,56 +74,64 @@ if ($totalRows > 0) {
 
         </div>
     </div>
-    <div class="row">
-        <table class="table table-striped">
-            <thead>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th scope="col"><i class="fas fa-trash-alt"></i></th>
+                <th scope="col"><i class="fas fa-edit"></i></th>
+                <th scope="col">#</th>
+                <th scope="col">作者</th>
+                <th scope="col">圖片</th>
+                <th scope="col">標題</th>
+                <th scope="col">分類</th>
+                <th scope="col">主題</th>
+                <th scope="col">內容</th>
+                <th scope="col">建立時間</th>
+                <th scope="col">最後更新</th>
+                <th scope="col">點擊數</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($rows as $r) : ?>
                 <tr>
-                    <th scope="col"><i class="fas fa-trash-alt"></i></th>
-                    <th scope="col"><i class="fas fa-edit"></i></th>
-                    <th scope="col">#</th>
-                    <th scope="col">圖片</th>
-                    <th scope="col">建立時間</th>
-                    <th scope="col">最後更新</th>
-                    <th scope="col">標題</th>
-                    <th scope="col">分類</th>
-                    <th scope="col">主題</th>
-                    <th scope="col">內容</th>
-                    <th scope="col">點擊數</th>
+                    <td>
+                        <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a href="data-edit.php?sid=<?= $r['sid'] ?>">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                    </td>
+                    <td><?= $r['sid'] ?></td>
+                    <td></td>
+                    <td>
+                        <img src="./uploads/<?= $r['picture'] ?>" alt="" width="150px">
+                    </td>
+                    <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
+                    <td style="overflow:hidden;white-space:nowrap">
+                        <!-- <?= $r['type_sid'] ?> -->
+                        <?php foreach ($ptype as $p) : ?>
+                            <?= ($p['sid'] == $r['type_sid']) ? $p['type'] : '' ?>
+                        <?php endforeach; ?>
+                    </td>
+                    <td style="overflow:hidden;white-space:nowrap">
+                        <!-- <?= $r['issue_sid'] ?> -->
+                        <?php foreach ($issue as $i) : ?>
+                            <?= ($i['sid'] == $r['issue_sid']) ? $i['name'] : '' ?>
+                        <?php endforeach; ?>
+                    </td>
+                    <td><?= mb_strimwidth(($r['content']), 0, 30, "...", "utf-8") ?></td>
+                    <td><?= $r['created_at'] ?></td>
+                    <td><?= $r['Last_updated'] ?></td>
+                    <td><?= $r['clicks'] ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <div class="row">
-                    <?php foreach ($rows as $r) : ?>
-                        <tr>
-                            <td>
-                                <a href="data-delete.php?sid=<?= $r['sid'] ?>" onclick="ifDel(event)" data-sid="<?= $r['sid'] ?>">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </td>
-                            <td>
-                                <a href="data-edit.php?sid=<?= $r['sid'] ?>">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                            </td>
-                            <td><?= $r['sid'] ?></td>
-                            <td>
-                                <img src="./uploads/<?= $r['picture'] ?>" alt="" width="150px">
-                            </td>
-                            <td><?= $r['created_at'] ?></td>
-                            <td><?= $r['Last_updated'] ?></td>
-                            <td style="overflow:hidden;white-space:nowrap"><?= strip_tags($r['title']) ?></td>
-                            <td><?= $r['type_sid'] ?></td>
-                            <td><?= $r['issue_sid'] ?></td>
-                            <td><?= strip_tags($r['content']) ?></td>
-                            <td><?= $r['clicks'] ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 
-
-            </tbody>
-        </table>
-    </div>
 
 </div>
 

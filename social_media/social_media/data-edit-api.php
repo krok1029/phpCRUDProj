@@ -36,6 +36,8 @@ if (mb_strlen($_POST['content']) < 15) {
 
 
 $sql = "UPDATE `forum_article` SET 
+`type_sid`=?,
+`issue_sid`=?,
 `title`=?,
 `content`=?,
 `picture`=?,
@@ -45,6 +47,8 @@ WHERE `sid`=?";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
+    $_POST['ptype_sid'],
+    $_POST['issue_sid'],
     $_POST['title'],
     $_POST['content'],
     $_POST['picture'],

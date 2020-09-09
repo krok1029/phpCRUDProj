@@ -29,13 +29,16 @@ if (mb_strlen($_POST['content']) < 15) {
 }
 
 
-$sql = "INSERT INTO `forum_article`(`clicks`, `title`, `content`, `picture`, `created_at`) VALUES (0,?,?,?,NOW())";
+$sql = "INSERT INTO `forum_article`(`type_sid`, `issue_sid`, `title`, `content`, `picture`, `created_at`)
+VALUES (?,?,?,?,?,NOW())";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
+    $_POST['ptype_sid'],
+    $_POST['issue_sid'],
     $_POST['title'],
     $_POST['content'],
-    $_POST['picture'],
+    $_POST['picture']
 ]);
 
 // echo $stmt->rowCount();
