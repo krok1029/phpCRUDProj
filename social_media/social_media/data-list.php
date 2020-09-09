@@ -22,6 +22,9 @@ $issue = $pdo->query($issue_sql)->fetchAll();
 $member_sql = "SELECT * FROM `member_list` WHERE 1";
 $member1 = $pdo->query($member_sql)->fetchAll();
 
+$admins_sql = "SELECT `sid`, `nickname` FROM `admins` WHERE 1";
+$admins_name = $pdo->query($admins_sql)->fetchAll();
+
 $rows = [];
 if ($totalRows > 0) {
     if ($page < 1) {
@@ -44,8 +47,13 @@ if ($totalRows > 0) {
     th {
         white-space: nowrap;
     }
-    .member_text{
-        color:darkcyan;
+
+    .member_text {
+        color: darkcyan;
+    }
+    .admins_text{
+        color:deeppink;
+        font-weight:bold;
     }
 </style>
 <?php require __DIR__ . './parts/__navbar.php'; ?>
@@ -113,10 +121,17 @@ if ($totalRows > 0) {
                         </td>
                     <?php endif; ?>
                     <td><?= $r['sid'] ?></td>
-                    <td class="member_text" style="overflow:hidden;white-space:nowrap">
-                        <?php foreach ($member1 as $m) : ?>
-                            <?= ($m['sid'] == $r['member_sid']) ? $m['name'] : '' ?>
-                        <?php endforeach; ?>
+                    <td style="overflow:hidden;white-space:nowrap">
+                        <div class="admins_text">
+                            <?php foreach ($admins_name as $am) : ?>
+                                <?= ($am['sid'] == $r['admin_sid']) ? "小幫手 " . $am['nickname'] : '' ?>
+                            <?php endforeach; ?>
+                        </div>
+                        <div class="member_text">
+                            <?php foreach ($member1 as $m) : ?>
+                                <?= ($m['sid'] == $r['member_sid']) ? $m['name'] : '' ?>
+                            <?php endforeach; ?>
+                        </div>
                     </td>
                     <td>
                         <img src="./uploads/<?= $r['picture'] ?>" onerror="javascript:this.src='./uploads/pets.png'" alt="" width="150px">

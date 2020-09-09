@@ -9,6 +9,9 @@ $ptype = $pdo->query($ptype_sql)->fetchAll();
 
 $issue_sql = "SELECT * FROM forum_issue WHERE 1";
 $issue = $pdo->query($issue_sql)->fetchAll();
+
+$admins_sql = "SELECT `sid`, `nickname` FROM `admins` WHERE 1";
+$admins_name = $pdo->query($admins_sql)->fetchAll();
 ?>
 
 <?php require __DIR__ . './parts/__html_head.php'; ?>
@@ -32,6 +35,14 @@ $issue = $pdo->query($issue_sql)->fetchAll();
                 <div class="card-body">
                     <h5 class="card-title">新增資料</h5>
                     <form name="form1" onsubmit="checkForm(); return false; " novalidate>
+                        <div class="form-group">
+                            <label for="admin_name"><span class="red-stars">**</span> 發文者</label>
+                            <select class="form-control" id="admin_name" name="admin_name">
+                                <?php foreach ($admins_name as $am) : ?>
+                                    <option value="<?= $am['sid'] ?>"><?= $am['nickname'] ?></option>
+                                <?php endforeach ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="title"><span class="red-stars">**</span> 標題</label>
                             <input type="text" class="form-control" id="title" name="title" required>
@@ -87,6 +98,7 @@ $issue = $pdo->query($issue_sql)->fetchAll();
     const submitBtn = document.querySelector('button[type=submit]');
     const file_input = document.querySelector('#file_input');
     const picture = document.querySelector('#picture');
+    const $admins_name = document.querySelector('#admin_name');
 
     file_input.addEventListener('change', function(event) {
         console.log(file_input.files)

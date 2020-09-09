@@ -31,13 +31,14 @@ if (mb_strlen($_POST['content']) < 15) {
 }
 
 
-$sql = "INSERT INTO `forum_article`(`type_sid`, `issue_sid`, `title`, `content`, `picture`, `created_at`,`clicks`)
-VALUES (?,?,?,?,?,NOW(),0)";
+$sql = "INSERT INTO `forum_article`(`type_sid`, `issue_sid`, `admin_sid`, `title`, `content`, `picture`, `created_at`,`clicks`)
+VALUES (?,?,?,?,?,?,NOW(),0)";
 
 $stmt = $pdo->prepare($sql);
 $stmt->execute([
     $_POST['ptype_sid'],
     $_POST['issue_sid'],
+    $_POST['admin_name'],
     $_POST['title'],
     $_POST['content'],
     $_POST['picture'],
