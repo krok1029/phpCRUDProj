@@ -1,6 +1,5 @@
 <?php
-//登入的功能
-require __DIR__ . '/parts/__connect_db.php';
+require __DIR__. '/parts/__connect_db.php';
 
 header('Content-Type: application/json');
 
@@ -14,8 +13,8 @@ $output = [
 $account = isset($_POST['account']) ? $_POST['account'] : '';
 $password = isset($_POST['password']) ? $_POST['password'] : '';
 
-$sql = "SELECT `sid`, `account`, `nickname` 
-        FROM `admins` 
+$sql = "SELECT `pet_shop_admins_id`, `account`, `nickname` 
+        FROM `pet_shop_admins` 
         WHERE `account`=? AND `password`=SHA1(?)";
 
 $stmt = $pdo->prepare($sql);
@@ -24,9 +23,9 @@ $stmt->execute([
     $password,
 ]);
 
-if ($stmt->rowCount()) {
+if($stmt->rowCount()){
     $output['success'] = true;
-    $_SESSION['admin'] = $stmt->fetch();
+    $_SESSION['admin1'] = $stmt->fetch();
 }
 
 echo json_encode($output, JSON_UNESCAPED_UNICODE);

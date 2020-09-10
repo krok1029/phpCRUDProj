@@ -20,7 +20,7 @@ $pdo_options = [
 
 $pdo = new PDO($dsn, $db_user, $db_pass, $pdo_options);
 
-define('WEB_ROOT2', '/phpCRUDProj/social_media/social_media');
+define('WEB_ROOT', '/phpCRUDProj/social_media/social_media');
 
 if (!isset($_SESSION)) {
     session_start();
