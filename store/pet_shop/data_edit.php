@@ -17,7 +17,6 @@ if (empty($row)) {
 }
 
 //分類連動
-
 $c_sql = "SELECT * FROM shop_goods_type  ";
 
 $cates = $pdo->query($c_sql)->fetchAll();

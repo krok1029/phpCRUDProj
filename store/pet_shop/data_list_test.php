@@ -23,6 +23,8 @@ if ($totalRows > 0) {
         exit;
     };
 
+    $sql = "UPDATE `cart_list_01` SET `buy_now` = 0 WHERE buy_now = 1";
+    $stmt = $pdo->query($sql);
     $sql = sprintf("SELECT * FROM `cart_list_01` ORDER BY cart_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll();
@@ -88,7 +90,7 @@ if ($totalRows > 0) {
                 <?php foreach ($rows as $r) : ?>
                     <tr>
                         <?php if (empty($r['is_buy'])) : ?>
-                            <?php if (isset($_SESSION['admin'])) : ?>
+                            <?php if (isset($_SESSION['admin1'])) : ?>
                                 <td><a href="data_delete_test.php?cart_id=<?= $r['cart_id'] ?>" onclick="ifDel(event)" data-cart_id="<?= $r['cart_id'] ?>" data-name="<?= $r['name'] ?>">
                                         <i class="fas fa-trash-alt"></i>
                                     </a>
@@ -150,35 +152,18 @@ if ($totalRows > 0) {
     const submitBtn = document.querySelector('button[type=submit]');
 
     function checkForm() {
-        let isPass = true;
+
 
         submitBtn.style.display = 'none';
-        // TODO: 檢查資料格式
 
-        if (isPass) {
-            const fd = new FormData(document.form1);
+        setTimeout(() => {
+            location.href = 'order_insert.php';
+        }, 1000)
 
-            fetch('data_list_api_test.php', {
-                    method: 'POST',
-                    body: fd
-                })
-                .then(r => r.json())
-                .then(obj => {
-                    console.log(obj);
-                    if (obj.success) {
-                        setTimeout(() => {
-                            location.href = 'order_insert.php';
-                        }, 1000)
-                    } else {
 
-                        submitBtn.style.display = 'block';
-                    }
-                });
 
-        } else {
-            submitBtn.style.display = 'block';
-        }
     }
+
 
     ///////////////////
 
@@ -232,6 +217,25 @@ if ($totalRows > 0) {
 
     $('input:checkbox').on('change', function() {
         console.log($(this).prop('checked'));
+        console.log($(this).val());
+        const fd = new FormData();
+        fd.append('cart_id', $(this).val())
+        if ($(this).prop('checked')) {
+            console.log('checked');
+            fd.append('buy_now', 1);
+        } else {
+            console.log('unchecked');
+            fd.append('buy_now', 0);
+        }
+
+        fetch('data_list_api_test.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(obj => {
+                console.log(obj);
+            });
         checkNumber();
     })
 
@@ -257,7 +261,7 @@ if ($totalRows > 0) {
             }
         })
 
-        $('.totalPrice').text(total)
+        $('.totalPrice').text('total:' + total)
     }
 
     $(document).ready(function() {

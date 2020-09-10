@@ -44,7 +44,6 @@ if ($stmt->rowCount()) {
 ///////////////////
 
 // $sale = intval($_GET['sale']) ?? 0;
-// $shelf_status = intval($_GET['shelf_status']) ?? 0;
 
 // $sql = "UPDATE `shop_goods` SET `sale`=? WHERE `goods_id`=$goods_id";
 

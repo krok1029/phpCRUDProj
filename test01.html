@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<p id="srf">输入法</p>
+		<div id="srf1">
+	    <ul>
+		<li>百度输入法</li>
+		<li>QQ输入法</li>
+		<li>搜狗输入法</li>
+		</ul>
+        </div>
+        
+
+        <script type="text/javascript">
+			window.onload=function(){
+				var srf=document.getElementById("srf");
+				var srf1=document.getElementById("srf1").style;
+				srf.onclick=function(){
+					  if(srf1.display=='none'){
+			   srf1.display="red"
+					  }
+					  else{
+					  	srf1.display="none"
+					  }
+				}
+			}
+		</script>
+	</body>
+</html>

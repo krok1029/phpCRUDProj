@@ -20,6 +20,11 @@ $sid = intval($_GET['sid']) ?? 0;
 $price = intval($_GET['price']) ?? 0;
 $name = $_GET['name'];
 
+//if(商品列表goods_id=購物車列表goods_id){
+//if(is_buy=1){insert into `cart_list_01`...}
+//if(is_buy=0){update `cart_list_01` set `quantity`=? WHERE `cart_id`=?;}}
+//else{insert into`cart_list_01`...}
+
 $sql = "insert into `cart_list_01` (`goods_id`,`admins_id`,`name`,`price`,`quantity`, `created_at`) VALUES (?, ?, ?, ? , ?, NOW())";
 
 $stmt = $pdo->prepare($sql);
@@ -39,21 +44,21 @@ if ($stmt->rowCount()) {
 
 ///////////////////
 
-$sale = intval($_GET['sale']) ?? 0;
+// $sale = intval($_GET['sale']) ?? 0;
 
 
-$sql = "UPDATE `shop_goods` SET `sale`=? WHERE `goods_id`=$goods_id";
+// $sql = "UPDATE `shop_goods` SET `sale`=? WHERE `goods_id`=$goods_id";
 
-$stmt2 = $pdo->prepare($sql);
+// $stmt2 = $pdo->prepare($sql);
 
-$stmt2->execute([
-    $sale + 1,
-]);
+// $stmt2->execute([
+//     $sale + 1,
+// ]);
 
 
-if ($stmt2->rowCount()) {
-    $output['success'] = true;
-}
+// if ($stmt2->rowCount()) {
+//     $output['success'] = true;
+// }
 
 //////////////////
 

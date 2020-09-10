@@ -37,7 +37,7 @@ if ($totalRows > 0) {
     $rows = $stmt->fetchAll();
 
     //類別資料表
-    $c_sql = "SELECT * FROM shop_goods_type  ";
+    $c_sql = "SELECT * FROM shop_goods_type";
     $cates = $pdo->query($c_sql)->fetchAll();
 }
 
@@ -74,6 +74,9 @@ $row = $pdo->query($sql)->fetchAll();
 
 foreach ($row as $data) {
     $dataArray[$data['goods_id']] = $data['quantity'];
+    if ($data['is_buy'] != '1') {
+        $isbuyArray[$data['goods_id']] = $data['is_buy'];
+    }
 }
 
 
@@ -220,12 +223,12 @@ foreach ($row as $s);
                         <td>
                             <?php if (!empty($r['shelf_status'])) : ?>
                                 <?php if (!empty($dataArray[$r['goods_id']])) : ?>
-                                    <?php if (!empty($row['is_buy'])) : ?>
-                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                    <?php if (!isset($isbuyArray[$r['goods_id']]) || $isbuyArray[$r['goods_id']] != '0') : ?>
+                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     <?php endif; ?>
-                                    <?php if (empty($row['is_buy'])) : ?>
+                                    <?php if (isset($isbuyArray[$r['goods_id']]) && $isbuyArray[$r['goods_id']] == '0') : ?>
                                         <a href="cart_update_api.php?goods_id=<?= $r['goods_id'] ?>&sale=<?= $r['sale'] ?>&cart_id=<?= $s['cart_id'] ?>&quantity=<?= $dataArray[$r['goods_id']] ?>">
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
@@ -259,7 +262,7 @@ foreach ($row as $s);
             </tr>
         </thead>
         <tbody>
-            <!-- <?php foreach ($row as $s) : ?> -->
+
             <?php if (empty($s['is_buy'])) : ?>
                 <tr>
                     <td style="display: none;"><?= $s['cart_id'] ?></td>
@@ -267,13 +270,13 @@ foreach ($row as $s);
                     <td style="display: none;"><?= $s['quantity'] ?></td>
                 </tr>
             <?php endif; ?>
-            <!-- <?php endforeach; ?> -->
+
         </tbody>
     </table>
     <!-- 購物車結束 -->
+
+
 </div>
-
-
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
     function ifDel(event) {

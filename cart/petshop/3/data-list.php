@@ -105,9 +105,9 @@ foreach ($row as $s);
                 <?php if (isset($_SESSION['admin'])) : ?>
                     <th scope="col"><i class="fas fa-edit"></i></th>
                 <?php endif; ?>
-
-                <th scope="col"><i class="fas fa-shopping-cart"></i></th>
-
+                <?php if (isset($_SESSION['admin'])) : ?>
+                    <th scope="col"><i class="fas fa-shopping-cart"></i></th>
+                <?php endif; ?>
 
             </tr>
         </thead>
