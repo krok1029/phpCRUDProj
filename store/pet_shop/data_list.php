@@ -67,6 +67,18 @@ if (isset($_POST['search'])) {
         // }
     }
 }
+
+$row = [];
+$sql = " SELECT * FROM `cart_list_01` ORDER BY cart_id";
+$row = $pdo->query($sql)->fetchAll();
+
+foreach ($row as $data) {
+    $dataArray[$data['goods_id']] = $data['quantity'];
+}
+
+
+foreach ($row as $s);
+
 // 搜尋結束
 # 正規表示式
 // https://developer.mozilla.org/zh-TW/docs/Web/JavaScript/Guide/Regular_Expressions
@@ -207,9 +219,23 @@ if (isset($_POST['search'])) {
                     <?php if (isset($_SESSION['admin1'])) : ?>
                         <td>
                             <?php if (!empty($r['shelf_status'])) : ?>
-                                <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
-                                    <i class="fas fa-shopping-cart"></i>
-                                </a>
+                                <?php if (!empty($dataArray[$r['goods_id']])) : ?>
+                                    <?php if (!empty($row['is_buy'])) : ?>
+                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                    <?php if (empty($row['is_buy'])) : ?>
+                                        <a href="cart_update_api.php?goods_id=<?= $r['goods_id'] ?>&sale=<?= $r['sale'] ?>&cart_id=<?= $s['cart_id'] ?>&quantity=<?= $dataArray[$r['goods_id']] ?>">
+                                            <i class="fas fa-shopping-cart"></i>
+                                        </a>
+                                    <?php endif; ?>
+                                <?php endif; ?>
+                                <?php if (empty($dataArray[$r['goods_id']])) : ?>
+                                    <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                        <i class="fas fa-shopping-cart"></i>
+                                    </a>
+                                <?php endif; ?>
                             <?php endif; ?>
                             <?php if (empty($r['shelf_status'])) : ?>
                                 <i class="fas fa-shopping-cart"></i>
@@ -221,6 +247,30 @@ if (isset($_POST['search'])) {
             <?php endforeach; ?>
         </tbody>
     </table>
+
+    <!-- 購物車 -->
+    <table class="table table-striped">
+        <!-- `cart_id`, `name`, `price`, `quantity` -->
+        <thead>
+            <tr>
+                <th scope="col" style="display: none;">cart_id</th>
+                <th scope="col" style="display: none;">goods_id</th>
+                <th scope="col" style="display: none;">數量</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- <?php foreach ($row as $s) : ?> -->
+            <?php if (empty($s['is_buy'])) : ?>
+                <tr>
+                    <td style="display: none;"><?= $s['cart_id'] ?></td>
+                    <td style="display: none;"><?= $s['goods_id'] ?></td>
+                    <td style="display: none;"><?= $s['quantity'] ?></td>
+                </tr>
+            <?php endif; ?>
+            <!-- <?php endforeach; ?> -->
+        </tbody>
+    </table>
+    <!-- 購物車結束 -->
 </div>
 
 

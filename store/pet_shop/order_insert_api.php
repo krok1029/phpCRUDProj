@@ -49,7 +49,7 @@ if ($stmt->rowCount()) {
 
 $order_id =  $pdo->lastInsertId();
 
-$sql = "UPDATE `cart_list_01` SET `order_id`=$order_id,`is_buy`=1 WHERE `cart_id`=?";
+$sql = "UPDATE `cart_list_01` SET `order_id`=$order_id,`is_buy`=1,`buy_now`=2 WHERE `cart_id`=?";
 $stmt = $pdo->prepare($sql);
 //變陣列
 foreach (explode(', ', $_POST['cartIdArray'])  as $a) {
