@@ -23,6 +23,9 @@ if ($totalRows > 0) {
         exit;
     };
 
+    $sql = "UPDATE `cart_list_01` SET `buy_now` = 0 WHERE buy_now = 1";
+    $stmt = $pdo->query($sql);
+
     $sql = sprintf("SELECT * FROM `cart_list_01` ORDER BY cart_id DESC LIMIT %s, %s", ($page - 1) * $perPage, $perPage);
     $stmt = $pdo->query($sql);
     $rows = $stmt->fetchAll();
@@ -149,34 +152,13 @@ if ($totalRows > 0) {
     const submitBtn = document.querySelector('button[type=submit]');
 
     function checkForm() {
-        let isPass = true;
+
 
         submitBtn.style.display = 'none';
-        // TODO: 檢查資料格式
+        setTimeout(() => {
+            location.href = 'order_insert.php';
+        }, 1000)
 
-        if (isPass) {
-            const fd = new FormData(document.form1);
-
-            fetch('data_list_api_test.php', {
-                    method: 'POST',
-                    body: fd
-                })
-                .then(r => r.json())
-                .then(obj => {
-                    console.log(obj);
-                    if (obj.success) {
-                        setTimeout(() => {
-                            location.href = 'order_insert.php';
-                        }, 1000)
-                    } else {
-
-                        submitBtn.style.display = 'block';
-                    }
-                });
-
-        } else {
-            submitBtn.style.display = 'block';
-        }
     }
 
     ///////////////////
@@ -229,8 +211,28 @@ if ($totalRows > 0) {
 
     ///////////////////
 
+
     $('input:checkbox').on('change', function() {
         console.log($(this).prop('checked'));
+        console.log($(this).val());
+        const fd = new FormData();
+        fd.append('cart_id', $(this).val())
+        if ($(this).prop('checked')) {
+            console.log('checked');
+            fd.append('buy_now', 1);
+        } else {
+            console.log('unchecked');
+            fd.append('buy_now', 0);
+        }
+
+        fetch('data_list_api_test.php', {
+                method: 'POST',
+                body: fd
+            })
+            .then(r => r.json())
+            .then(obj => {
+                console.log(obj);
+            });
         checkNumber();
     })
 
@@ -256,7 +258,7 @@ if ($totalRows > 0) {
             }
         })
 
-        $('.totalPrice').text(total)
+        $('.totalPrice').text('total:' + total)
     }
 
     $(document).ready(function() {

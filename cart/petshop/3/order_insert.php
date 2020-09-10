@@ -39,9 +39,16 @@ $row = [];
 $sql = " SELECT * FROM `pet_shop_admins` ORDER BY admins_id";
 $row = $pdo->query($sql)->fetch();
 
+$goodsRow = [];
+$sql = " SELECT * FROM `shop_goods` ORDER BY goods_id";
+$goodsRow = $pdo->query($sql)->fetchAll();
+foreach ($goodsRow as $data) {
+    $dataArray[$data['goods_id']] = $data['sale'];
+}
 
 $cartIdArray = [];
-
+$goodsIdArray = [];
+$quantityArray = [];
 ?>
 
 <?php require __DIR__ . '/__html_head.php'; ?>
@@ -132,6 +139,7 @@ $cartIdArray = [];
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
+                            <th scope="col">goods_id</th>
                             <th scope="col" style="display:none">order_id</th>
                             <th scope="col" style="display:none">cart_id</th>
                             <th scope="col">商品</th>
@@ -144,7 +152,12 @@ $cartIdArray = [];
                         <?php foreach ($rows as $r) : ?>
                             <?php if (empty($r['is_buy'])) : ?>
                                 <tr>
-                                    <?php array_push($cartIdArray, $r['cart_id']) ?>
+                                    <?php
+                                    array_push($cartIdArray, $r['cart_id']);
+                                    array_push($goodsIdArray, $r['goods_id']);
+                                    array_push($quantityArray, $r['quantity']);
+                                    ?>
+                                    <td><?= $r['goods_id'] ?></td>
                                     <td style="display:none"> <?= $array['order_id'] ?></td>
                                     <td style="display:none"><?= $r['cart_id'] ?></td>
                                     <td><?= $r['name'] ?></td>
@@ -155,9 +168,12 @@ $cartIdArray = [];
                                 </tr>
                             <?php endif; ?>
                         <?php endforeach; ?>
-                        <input type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
-                        <!--變字串-->
-                        <?php implode(", ", $cartIdArray)  ?>
+
+                        <!--implode 變字串-->
+                        <input id="cartIDArray" type="hidden" name="cartIdArray" value="<?= implode(", ", $cartIdArray);  ?>">
+                        <input id="goodsIdArray" type="hidden" name="goodsIdArray" value="<?= implode(", ", $goodsIdArray);  ?>">
+                        <input id="quantityArray" type="hidden" name="quantityArray" value="<?= implode(", ", $quantityArray);  ?>">
+
                     </tbody>
                 </table>
                 <div class="form-group">
@@ -168,6 +184,25 @@ $cartIdArray = [];
             </div>
 
         </div>
+
+        <table class="table table-striped">
+            <!-- `goods_id`, `sale`-->
+            <thead>
+                <tr>
+                    <th scope="col" style="display: none;">goods_id</th>
+                    <th scope="col" style="display: none;">sale</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($goodsRow as $g) : ?>
+                    <tr>
+                        <td style="display: none;"><?= $g['goods_id'] ?></td>
+                        <td style="display: none;"><?= $g['sale'] ?></td>
+                    </tr>
+                <?php endforeach; ?>
+
+            </tbody>
+        </table>
 
     </div>
 </form>
@@ -211,6 +246,10 @@ $cartIdArray = [];
         if (isPass) {
             const fd = new FormData(document.form1);
             // fd.append($array);
+            console.log('cartIDArray', $('#cartIDArray').val());
+            console.log('goodsIdArray', $('#goodsIdArray').val());
+            console.log('quantityArray', $('#quantityArray').val());
+
             fetch('order_insert_api.php', {
                     method: 'POST',
                     body: fd

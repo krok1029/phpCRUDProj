@@ -37,18 +37,18 @@ $output = [
     'error' => ''
 ];
 
-foreach ($_POST['cart_id_check'] as $check_id) {
-    $sql = "update `cart_list_01` set `buy_now`=? WHERE `cart_id`=?";
 
-    $stmt = $pdo->prepare($sql);
+$sql = "update `cart_list_01` set `buy_now`=? WHERE `cart_id`=?";
 
-    $stmt->execute([
-        1,
-        $check_id
-    ]);
+$stmt = $pdo->prepare($sql);
 
-    $output['success'] = true;
-}
+$stmt->execute([
+    $_POST['buy_now'],
+    $_POST['cart_id']
+]);
+
+$output['success'] = true;
+
 
 
 
