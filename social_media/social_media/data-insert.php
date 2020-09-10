@@ -10,7 +10,7 @@ $ptype = $pdo->query($ptype_sql)->fetchAll();
 $issue_sql = "SELECT * FROM forum_issue WHERE 1";
 $issue = $pdo->query($issue_sql)->fetchAll();
 
-$admins_sql = "SELECT `sid`, `nickname` FROM `admins` WHERE 1";
+$admins_sql = "SELECT `pet_shop_admins_id`, `nickname` FROM `pet_shop_admins` WHERE 1";
 $admins_name = $pdo->query($admins_sql)->fetchAll();
 ?>
 
@@ -39,7 +39,7 @@ $admins_name = $pdo->query($admins_sql)->fetchAll();
                             <label for="admin_name"><span class="red-stars">**</span> 發文者</label>
                             <select class="form-control" id="admin_name" name="admin_name">
                                 <?php foreach ($admins_name as $am) : ?>
-                                    <option value="<?= $am['sid'] ?>"><?= $am['nickname'] ?></option>
+                                    <option value="<?= $am['pet_shop_admins_id'] ?>"><?= $am['nickname'] ?></option>
                                 <?php endforeach ?>
                             </select>
                         </div>

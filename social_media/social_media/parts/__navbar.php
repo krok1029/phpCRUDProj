@@ -12,24 +12,25 @@ if (!isset($page_name)) $page_name = '';
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav mr-auto">
         <li class="nav-item <?= $page_name == 'data-list' ? 'active' : '' ?> ">
-          <a class="nav-link" href="<?= WEB_ROOT2 ?>/data-list.php">文章列表</a>
+          <a class="nav-link" href="<?= WEB_ROOT ?>/data-list.php">文章列表</a>
         </li>
         <li class="nav-item <?= $page_name == 'data-insert' ? 'active' : '' ?>">
-          <a class="nav-link" href="<?= WEB_ROOT2 ?>/data-insert.php">文章新增</a>
+          <a class="nav-link" href="<?= WEB_ROOT ?>/data-insert.php">文章新增</a>
         </li>
 
       </ul>
       <ul class="navbar-nav">
-        <?php if (isset($_SESSION['admin'])) : ?>
+        <?php if (isset($_SESSION['admin1'])) : ?>
           <li class="nav-item">
-            <a class="nav-link"><?= $_SESSION['admin']['nickname'] ?></a>
+            <a class="nav-link"><?= $_SESSION['admin1']['nickname'] ?></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="<?= WEB_ROOT2 ?>/logout.php">登出</a>
+            <a class="nav-link" href="<?= WEB_ROOT ?>/logout.php">登出</a>
           </li>
+
         <?php else : ?>
-          <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?> ">
-            <a class="nav-link" href="<?= WEB_ROOT2 ?>/login.php">登入</a>
+          <li class="nav-item <?= $page_name == 'login' ? 'active' : '' ?>">
+            <a class="nav-link" href="<?= WEB_ROOT ?>/login.php">登入</a>
           </li>
         <?php endif; ?>
       </ul>
