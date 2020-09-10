@@ -139,7 +139,7 @@ $quantityArray = [];
                     <!-- `cart_id`, `name`, `price`, `quantity` -->
                     <thead>
                         <tr>
-                            <th scope="col">goods_id</th>
+                            <th scope="col" style="display:none">goods_id</th>
                             <th scope="col" style="display:none">order_id</th>
                             <th scope="col" style="display:none">cart_id</th>
                             <th scope="col">商品</th>
@@ -157,7 +157,7 @@ $quantityArray = [];
                                     array_push($goodsIdArray, $r['goods_id']);
                                     array_push($quantityArray, $r['quantity']);
                                     ?>
-                                    <td><?= $r['goods_id'] ?></td>
+                                    <td style="display:none"><?= $r['goods_id'] ?></td>
                                     <td style="display:none"> <?= $array['order_id'] ?></td>
                                     <td style="display:none"><?= $r['cart_id'] ?></td>
                                     <td><?= $r['name'] ?></td>

@@ -99,13 +99,15 @@ if(! isset($page_name)) $page_name='';
 
 
 <div class="container center">
-    <h2>Hello~各位，我們要進來了ヽ(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)人(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)ﾉ</h2>
+    <h3>Hello~各位，我們要進來了ヽ(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)人(∀ﾟ )人(ﾟ∀ﾟ)人( ﾟ∀)ﾉ~<i id="close_picture" class="fas fa-heart"></i></h3>
     <img style="width:88%;" src="./2000x.gif">
 </div>
 
 <script src="<?= WEB_ROOT ?>/lib/jquery-3.5.1.min.js"></script>
 <script src="<?= WEB_ROOT ?>/bootstrap/js/bootstrap.js"></script>
-
+<script>
+    document.getElementById('close_picture')
+</script>
 </body>
 </html>
 
