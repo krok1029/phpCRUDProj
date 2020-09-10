@@ -3,7 +3,7 @@ if (!isset($page_name)) $page_name = '';
 ?>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
-        <a class="navbar-brand" href="http://localhost/phpCRUDProj/">寵物後台 -</a>
+        <a class="navbar-brand" href="http://localhost/phpCRUDProj/#">寵物後台 -</a>
         <a class="navbar-brand" href="#">寵物商城</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
