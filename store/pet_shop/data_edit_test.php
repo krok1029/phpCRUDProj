@@ -54,15 +54,7 @@ if (empty($row)) {
                             <label for="quantity"><span class="red-stars">**</span>quantity</label>
 
                             <input type="text" pattern="[1-9][0-9]*" class="form-control" id="quantity" name="quantity" onkeyup="return ValidateNumber(this,value)" value="<?= htmlentities($row['quantity']) ?>">
-
-                            <script type="text/javascript">
-                                function ValidateNumber(e, pnumber) {
-                                    if (!/^[1-9][0-9]*$/.test(pnumber)) {
-                                        e.value = /^[1-9][0-9]*/.exec(e.value);
-                                    }
-                                    return false;
-                                }
-                            </script>
+                            <small class="form-text error-msg"></small>
                         </div>
 
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -81,14 +73,36 @@ if (empty($row)) {
 </div>
 <?php include __DIR__ . '/parts/__scripts.php'; ?>
 <script>
+    function ValidateNumber(e, pnumber) {
+        if (!/^[1-9][0-9]*$/.test(pnumber)) {
+            e.value = /^[1-9][0-9]*/.exec(e.value);
+            //[1-9]* ^[1-9]*$ ^[1-9]* 09\d{2}-?\d{3}-?\d{3}
+        }
+        return false;
+    }
+</script>
+<script>
     const infobar = document.querySelector('#infobar');
     const submitBtn = document.querySelector('button[type=submit]');
+    const $quantity = document.querySelector('#quantity');
+    const r_fields = [$quantity];
 
     function checkForm() {
         let isPass = true;
 
-        // submitBtn.style.display = 'none';
-        submitBtn.style.display = 'block';
+        r_fields.forEach(el => {
+            el.style.borderColor = '#CCCCCC';
+            el.nextElementSibling.innerHTML = '';
+        });
+
+        submitBtn.style.display = 'none';
+        // submitBtn.style.display = 'block';
+        // TODO: 檢查資料格式
+        if ($quantity.value.length < 1) {
+            isPass = false;
+            $quantity.style.borderColor = 'red';
+            $quantity.nextElementSibling.innerHTML = '請填寫正確的商品名稱';
+        }
 
         if (isPass) {
             const fd = new FormData(document.form1);
@@ -106,9 +120,9 @@ if (empty($row)) {
 
                         setTimeout(() => {
                             location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "data_list_test.php" ?>';
-                        }, 3000)
+                        }, 1000)
                     } else {
-                        infobar.innerHTML = obj.error || '修改失敗';
+                        infobar.innerHTML = obj.error || '資料沒有修改';
                         infobar.className = "alert alert-danger";
 
                         submitBtn.style.display = 'block';

@@ -109,7 +109,9 @@ if(! isset($page_name)) $page_name='';
     document.getElementById('close_picture').onclick=()=>{
         picture.style="display:none"
 }
-
+document.getElementById('close_picture').ondblclick=()=>{
+        picture.style="width:88%;display:block;"
+}
 </script>
 </body>
 </html>

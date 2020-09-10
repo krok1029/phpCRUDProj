@@ -169,7 +169,7 @@ $cates = $pdo->query($c_sql)->fetchAll();
 
                         setTimeout(() => {
                             location.href = '<?= $_SERVER['HTTP_REFERER'] ?? "data_list.php" ?>';
-                        }, 3000)
+                        }, 1000)
 
                     } else {
                         infobar.innerHTML = obj.error || '資料沒有修改';

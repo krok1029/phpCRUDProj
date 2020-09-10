@@ -260,7 +260,7 @@ $quantityArray = [];
 
                         setTimeout(() => {
                             location.href = 'data_list.php';
-                        }, 3000)
+                        }, 1000)
                     } else {
                         infobar.innerHTML = obj.error || '新增失敗';
                         infobar.className = "alert alert-danger";
