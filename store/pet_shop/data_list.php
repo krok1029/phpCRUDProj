@@ -224,7 +224,7 @@ foreach ($row as $s);
                             <?php if (!empty($r['shelf_status'])) : ?>
                                 <?php if (!empty($dataArray[$r['goods_id']])) : ?>
                                     <?php if (!isset($isbuyArray[$r['goods_id']]) || $isbuyArray[$r['goods_id']] != '0') : ?>
-                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin']['sid'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
+                                        <a href="cart_insert_api.php?goods_id=<?= $r['goods_id'] ?>&sid=<?= $_SESSION['admin1']['pet_shop_admins_id'] ?>&price=<?= $r['price'] ?>&name=<?= $r['name'] ?>&sale=<?= $r['sale'] ?>">
                                             <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     <?php endif; ?>
